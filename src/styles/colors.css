@@ -1,0 +1,16 @@
+:root {
+  --atomic-tangerine: #f29559ff;
+  --asparagus: #679436ff;
+  --white: #ffffffff;
+  --lapis-lazuli: #30638eff;
+  --indigo-dye: #003d5bff;
+}
+
+/* CSS HSL */
+:root {
+  --atomic-tangerine-hsl: hsla(24, 85%, 65%, 1);
+  --asparagus-hsl: hsla(89, 47%, 40%, 1);
+  --white-hsl: hsla(0, 0%, 100%, 1);
+  --lapis-lazuli-hsl: hsla(207, 49%, 37%, 1);
+  --indigo-dye-hsl: hsla(200, 100%, 18%, 1);
+}

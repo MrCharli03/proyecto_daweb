@@ -1,0 +1,15 @@
+@import url('colors.css');
+
+.footer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    background-color: var(--indigo-dye);
+    font-weight: bold;
+    color: var(--white);
+  }
+  
+  .language select {
+    margin-top: 10px;
+  }

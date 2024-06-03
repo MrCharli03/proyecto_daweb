@@ -1,29 +1,30 @@
-@import url('colors.css');
-
 .header {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
-    padding: 10px;
-    background-color: var(--asparagus);
-  }
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  padding: 10px;
+  background-color: var(--asparagus);
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
   
-  .logo {
-    font-size: 24px;
-    font-weight: bold;
-    align-items: center;
-    
-  }
-  
-  .logo-image {
-    width: 50px;
-    height: 50px;
-    margin-left: 10px;
-    
-  }
-  
-  .auth-buttons {
-    display: grid;
-    grid-template-columns: repeat(2, auto);
-    gap: 10px;
-  }
+  align-items: center;
+}
+
+.logo-image {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.auth-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: 10px;
+}
+
+.button {
+  color: var(--lapis-lazuli);
+}

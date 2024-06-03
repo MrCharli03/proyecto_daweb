@@ -1,12 +1,13 @@
 import React from 'react';
 import '../styles/Header.css';
-import citibykeLogo from '../images/logo.png'
 
 const Header = () => {
+  console.log('Ruta de la imagen:', "../images/logo.png");
+
   return (
     <header className="header">
       <div className="logo">
-        <img src={citibykeLogo} alt="Citybike Logo" className="logo-image" />
+        <img src="../images/logo.png" alt="Citybike Logo" className="logo-image" />
         CITYBIKE
       </div>
       <div className="auth-buttons">

@@ -9,8 +9,8 @@ const Header = () => {
   return (
     <Navbar bg="light" expand="lg" className="header">
       <Navbar.Brand href="#">
-        <Image style={{ marginLeft: '10px' }} src={ImageLogo} thumbnail height={50} width={50} />
-        <span style={{ marginLeft: '10px' }}>CITYBIKE</span>
+        <Image style={{ marginLeft: '10px' }} src={ImageLogo} roundedCircle height={50} width={50} />
+        <span style={{ marginLeft: '10px' }}>CityBike</span>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">

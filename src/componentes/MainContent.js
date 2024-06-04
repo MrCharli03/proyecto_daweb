@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
+import Image from 'react-bootstrap/Image';
 //import '../styles/MainContent.css';
 
 const MainContent = () => {
@@ -13,17 +14,17 @@ const MainContent = () => {
       <Row className="images">
         <Col md={4}>
           <Card className="img-placeholder">
-            <Card.Body>img</Card.Body>
+            <Image src="../images/aparcarBici.jpg" thumbnail />
           </Card>
         </Col>
         <Col md={4}>
           <Card className="img-placeholder">
-            <Card.Body>img</Card.Body>
+            <Image src="../images/biciCiudad.jpg" thumbnail />
           </Card>
         </Col>
         <Col md={4}>
           <Card className="img-placeholder">
-            <Card.Body>img</Card.Body>
+            <Image src="../images/catedral.jpg" thumbnail />
           </Card>
         </Col>
       </Row>

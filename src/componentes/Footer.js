@@ -24,11 +24,11 @@ const Footer = () => {
           </Col>
           <Col md={3}>
             <h5>Idioma:</h5>
-            <Form.Control as="select">
+            <Form.Select as="select">
               <option>Español</option>
               <option>Inglés</option>
               <option>Francés</option>
-            </Form.Control>
+            </Form.Select>
           </Col>
         </Row>
       </Container>

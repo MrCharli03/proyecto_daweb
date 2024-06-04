@@ -1,15 +1,15 @@
 import Header from '../componentes/Header';
-import MainContent from '../componentes/MainContent';
+import Login from '../componentes/Login';
 import Footer from '../componentes/Footer';
 
-const PaginaPresentacion = () => {
+const PaginaLogin = () => {
     return (
         <div>
             <Header />
-            <MainContent />
+            <Login />
             <Footer />
         </div>
     )
 }
 
-export default PaginaPresentacion;
+export default PaginaLogin;

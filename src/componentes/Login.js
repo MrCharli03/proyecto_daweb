@@ -56,10 +56,10 @@ const Login = () => {
                     </Form.Group>
                 </Row>
                 <br/>
-                <Button type="submit">Submit form</Button>
-                <Button variant="secondary" onClick={handleBackClick} style={{ marginLeft: '10px' }}>
+                <Button variant="secondary" onClick={handleBackClick} style={{ marginRight: '10px' }}>
                     Volver Atrás
                 </Button>
+                <Button type="submit">Login</Button>
             </Form>
         </Container>
     );

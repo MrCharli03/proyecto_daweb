@@ -1,18 +1,18 @@
 @import url('colors.css');
 
-  .footer {
-    background-color: var(--indigo-dye);
-    padding: 20px 0;
-  }
-  
-  .footer h5 {
-    margin-bottom: 15px;
-  }
-  
-  .footer .links,
-  .footer .community,
-  .footer .contacts,
-  .footer .language {
-    margin-bottom: 20px;
-  }
-  
+.footer {
+  background-color: var(--indigo-dye);
+  padding: 20px 0;
+  color: var(--white);
+}
+
+.footer h5 {
+  margin-bottom: 15px;
+}
+
+.footer .links,
+.footer .community,
+.footer .contacts,
+.footer .language {
+  margin-bottom: 20px;
+}

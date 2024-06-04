@@ -27,7 +27,7 @@ const MainContent = () => {
       </Row>
       <Row className="mb-4">
         <Col>
-          <p className="py-3">Empieza a moverte sostenible con nosotros</p>
+          <h2 className="py-3">Empieza a moverte sostenible con nosotros</h2>
         </Col>
       </Row>
     </Container>

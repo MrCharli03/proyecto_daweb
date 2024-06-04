@@ -1,11 +1,10 @@
 import React from 'react';
-import { Navbar, Nav, Button } from 'react-bootstrap';
+import { Navbar, Nav } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import Image from 'react-bootstrap/Image';
-//import '../styles/Header.css';
-import ImageLogo from '../images/logo.png'
+import ImageLogo from '../images/logo.png';
 
 const Header = () => {
-
   return (
     <Navbar bg="light" expand="lg" className="header">
       <Navbar.Brand href="#">
@@ -15,8 +14,8 @@ const Header = () => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
         <Nav className="auth-buttons">
-          <Button style={{ marginRight: '10px' }} variant="outline-primary" className="mr-2">Regístrate</Button>
-          <Button href="/login" style={{ marginRight: '10px' }} variant="outline-secondary">Login</Button>
+          <Link to="/register" className="btn btn-outline-primary" style={{ marginRight: '10px' }}>Regístrate</Link>
+          <Link to="/auth/login" className="btn btn-outline-secondary" style={{ marginRight: '10px' }}>Login</Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>

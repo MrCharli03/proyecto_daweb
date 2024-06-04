@@ -1,15 +1,13 @@
-import Header from '../componentes/Header';
+import React from 'react';
 import Login from '../componentes/Login';
-import Footer from '../componentes/Footer';
+//import '../styles/PaginaLogin.css';
 
 const PaginaLogin = () => {
     return (
-        <div>
-            <Header />
+        <div className="login-container">
             <Login />
-            <Footer />
         </div>
-    )
+    );
 }
 
 export default PaginaLogin;

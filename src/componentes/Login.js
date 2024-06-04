@@ -1,10 +1,11 @@
-import React from 'react';
-import { useState } from 'react';
-import { Container, Row, Col, Form, InputGroup, Button } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import '../styles/Login.css';
 
 const Login = () => {
     const [validated, setValidated] = useState(false);
+    const navigate = useNavigate();
 
     const handleSubmit = (event) => {
         const form = event.currentTarget;
@@ -14,6 +15,10 @@ const Login = () => {
         }
 
         setValidated(true);
+    };
+
+    const handleBackClick = () => {
+        navigate('/');
     };
 
     return (
@@ -52,6 +57,9 @@ const Login = () => {
                 </Row>
                 <br/>
                 <Button type="submit">Submit form</Button>
+                <Button variant="secondary" onClick={handleBackClick} style={{ marginLeft: '10px' }}>
+                    Volver Atrás
+                </Button>
             </Form>
         </Container>
     );

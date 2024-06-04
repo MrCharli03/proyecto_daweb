@@ -1,9 +1,9 @@
 import React from 'react';
 import { Navbar, Nav, Button } from 'react-bootstrap';
+import Image from 'react-bootstrap/Image';
 //import '../styles/Header.css';
 
 const Header = () => {
-  console.log('Ruta de la imagen:', "../images/logo.png");
 
   return (
     <Navbar bg="light" expand="lg" className="header">
@@ -14,6 +14,7 @@ const Header = () => {
           className="logo-image"
           style={{ width: '30px', height: '30px', marginRight: '10px' }}
         />
+        <Image src="../images/logo.png" thumbnail />
         CITYBIKE
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />

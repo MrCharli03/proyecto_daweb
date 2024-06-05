@@ -4,6 +4,7 @@
   background-color: var(--indigo-dye);
   padding: 20px 0;
   color: var(--white);
+  text-align: left;
 }
 
 .footer h5 {

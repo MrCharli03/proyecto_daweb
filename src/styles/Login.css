@@ -4,3 +4,35 @@
     display: flex;
 
 }
+
+.Card {
+    border-radius: 15px;
+}
+
+.separator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 15px 0;
+}
+
+.separator .line {
+    height: 1px;
+    background-color: #ccc;
+    flex-grow: 1;
+}
+
+.github-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.min-vh-100 {
+    min-height: 100vh;
+}
+
+.card-body {
+    max-width: 500px;
+    margin: 0 auto;
+}

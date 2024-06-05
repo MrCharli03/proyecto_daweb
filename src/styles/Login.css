@@ -1,3 +1,5 @@
+@import url('colors.css');
+
 .form {
     justify-content: center;
     align-items: center;
@@ -35,4 +37,9 @@
 .card-body {
     max-width: 500px;
     margin: 0 auto;
+}
+
+.fondo {
+    background-color: var(--blue);
+    color: var(--black);
 }

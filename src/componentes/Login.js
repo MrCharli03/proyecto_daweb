@@ -31,8 +31,8 @@ const Login = () => {
     };
 
     return (
-        <div className="d-flex justify-content-center align-items-center min-vh-100">
-            <Card className="p-4 rounded shadow-sm" style={{ width: '100%', maxWidth: '500px' }}>
+        <div className="d-flex justify-content-center align-items-center min-vh-100 fondo">
+            <Card className="p-4 rounded shadow-sm" style={{ width: '100%', maxWidth: '500px' , margin: '5%'}}>
                 <Card.Body>
                     <h1 className="text-center">Login</h1>
                     <br/>
@@ -54,7 +54,7 @@ const Login = () => {
                             <Form.Control
                                 required
                                 type="password"
-                                placeholder="contraseña"
+                                placeholder="Contraseña"
                             />
                             <Form.Control.Feedback type="invalid">
                                 Introduce una contraseña

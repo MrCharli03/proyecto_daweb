@@ -1,9 +1,10 @@
 :root {
   --atomic-tangerine: #f29559ff;
-  --asparagus: #679436ff;
+  --olive: #93A01E;
   --white: #ffffffff;
-  --lapis-lazuli: #30638eff;
-  --indigo-dye: #003d5bff;
+  --blue: #1B6CAE;
+  --lapis-lazuli: #005680;
+  --black: #000000;
 }
 
 /* CSS HSL */

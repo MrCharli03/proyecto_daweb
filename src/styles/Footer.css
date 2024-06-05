@@ -1,7 +1,7 @@
 @import url('colors.css');
 
 .footer {
-  background-color: var(--indigo-dye);
+  background-color: var(--lapis-lazuli);
   padding: 20px 0;
   color: var(--white);
   text-align: left;

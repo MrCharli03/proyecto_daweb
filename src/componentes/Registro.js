@@ -30,8 +30,8 @@ const Registro = () => {
     };
 
     return (
-        <div className="d-flex justify-content-center align-items-center min-vh-100">
-            <Card className="p-4 rounded shadow-sm" style={{ width: '100%', maxWidth: '500px' }}>
+        <div className="d-flex justify-content-center align-items-center min-vh-100 fondo">
+            <Card className="p-4 rounded shadow-sm" style={{ width: '100%', maxWidth: '500px', margin: '5%'}}>
                 <Card.Body>
                     <h1 className="text-center">Registro</h1>
                     <br />
@@ -41,7 +41,7 @@ const Registro = () => {
                             <Form.Control
                                 required
                                 type="text"
-                                placeholder="nombre"
+                                placeholder="Nombre"
                             />
                             <Form.Control.Feedback type="invalid">Introduce tu nombre</Form.Control.Feedback>
                         </Form.Group>
@@ -51,7 +51,7 @@ const Registro = () => {
                             <Form.Control
                                 required
                                 type="text"
-                                placeholder="apellidos"
+                                placeholder="Apellidos"
                             />
                             <Form.Control.Feedback type="invalid">Introduce tus apellidos</Form.Control.Feedback>
                         </Form.Group>
@@ -84,7 +84,7 @@ const Registro = () => {
                             <Form.Control
                                 required
                                 type="password"
-                                placeholder="contraseña"
+                                placeholder="Contraseña"
                             />
                             <Form.Control.Feedback type="invalid">Introduce una contraseña</Form.Control.Feedback>
                         </Form.Group>

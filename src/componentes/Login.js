@@ -36,12 +36,13 @@ const Login = () => {
                 }
 
                 sessionStorage.setItem('jwtToken', data.token);
+                sessionStorage.setItem('userRole', data.rol);
 
                 console.log("Login existoso: ", data);
                 // Aquí puedes guardar el token en el almacenamiento local o en el estado de la aplicación
                 // y redirigir al usuario a la página correspondiente
 
-                //navigate('/');
+                navigate('/saludo');
             } catch (error) {
                 console.error('Error en el login', error);
                 setError('Error en el login. Por favor, inténtalo de nuevo.');

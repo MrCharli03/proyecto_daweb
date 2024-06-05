@@ -6,6 +6,10 @@
   padding: 10px;
 }
 
+.header-gestor {
+  background-color: var(--atomic-tangerine);
+}
+
 .logo-font {
   font-size: 30px;
   font-weight: bold;

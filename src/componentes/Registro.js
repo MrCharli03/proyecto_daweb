@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Form, Button, Card } from 'react-bootstrap';
+import { Form, Button, Card, Col, Row } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -10,12 +10,57 @@ const Registro = () => {
     const [validated, setValidated] = useState(false);
     const navigate = useNavigate();
     const [birthDate, setBirthDate] = useState(null);
+    const [nombre, setNombre] = useState('');
+    const [dni, setDni] = useState('');
+    const [telefono, setTelefono] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const [responseMessage, setResponseMessage] = useState(''); // Estado para guardar la respuesta
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
+        event.preventDefault();
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
-            event.preventDefault();
             event.stopPropagation();
+        } else {
+            try {
+                const response = await fetch('http://localhost:8090/usuarios/solicitudesCodigos', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        dni: dni
+                    })
+                });
+
+                const data = await response.text();
+                setResponseMessage(data);
+
+                const registerResponse = await fetch(`http://localhost:8090/usuarios/register/?codigoActivacion=${data}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        dni: dni,
+                        nombreCompleto: nombre,
+                        username: email,
+                        idOAuth: "",
+                        fechaNacimiento: birthDate,
+                        telefono: telefono,
+                        password: password
+                    })
+                });
+
+                const registerData = await registerResponse.text();
+                console.log(registerData);
+
+            } catch (error) {
+                console.error('Error en el registro', error);
+                setError('Error en el registro. Por favor, inténtalo de nuevo.');
+            }
         }
 
         setValidated(true);
@@ -29,12 +74,26 @@ const Registro = () => {
         navigate('/auth/login');
     };
 
+    useEffect(() => {
+        const handleWheel = (event) => {
+            if (document.activeElement.type === 'number') {
+                document.activeElement.blur();
+            }
+        };
+        window.addEventListener('wheel', handleWheel, { passive: true });
+
+        return () => {
+            window.removeEventListener('wheel', handleWheel);
+        };
+    }, []);
+
     return (
         <div className="d-flex justify-content-center align-items-center min-vh-100 fondo">
-            <Card className="p-4 rounded shadow-sm" style={{ width: '100%', maxWidth: '500px', margin: '5%'}}>
+            <Card className="p-4 rounded shadow-sm" style={{ width: '100%', maxWidth: '500px', margin: '0%' }}>
                 <Card.Body>
                     <h1 className="text-center">Registro</h1>
-                    <br />
+                    <br/>
+                    {error && <p className="text-danger text-center">{error}</p>}
                     <Form noValidate validated={validated} onSubmit={handleSubmit}>
                         <Form.Group controlId="formNombre">
                             <Form.Label className="text-start w-100">Nombre</Form.Label>
@@ -42,31 +101,53 @@ const Registro = () => {
                                 required
                                 type="text"
                                 placeholder="Nombre"
+                                value={nombre}
+                                onChange={(e) => setNombre(e.target.value)}
                             />
                             <Form.Control.Feedback type="invalid">Introduce tu nombre</Form.Control.Feedback>
                         </Form.Group>
                         <br />
-                        <Form.Group controlId="formApellidos">
-                            <Form.Label className="text-start w-100">Apellidos</Form.Label>
+                        <Row>
+                            <Col>
+                                <Form.Group controlId="formDni">
+                                    <Form.Label className="text-start w-100">Dni</Form.Label>
+                                    <Form.Control
+                                        required
+                                        type="text"
+                                        placeholder="Dni"
+                                        value={dni}
+                                        onChange={(e) => setDni(e.target.value)}
+                                    />
+                                    <Form.Control.Feedback type="invalid">Introduce tu dni</Form.Control.Feedback>
+                                </Form.Group>
+                            </Col>
+                            <Col>
+                                <Form.Group controlId="formFechaNacimiento">
+                                    <Form.Label className="text-start w-100">Fecha Nacimiento</Form.Label>
+                                    <DatePicker
+                                        selected={birthDate}
+                                        onChange={(date) => setBirthDate(date)}
+                                        dateFormat="dd/MM/yyyy"
+                                        className="form-control w-100"
+                                        placeholderText="Selecciona una fecha"
+                                        required
+                                    />
+                                    <Form.Control.Feedback type="invalid">Selecciona una fecha</Form.Control.Feedback>
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <br />
+                        <Form.Group controlId="formTelefono">
+                            <Form.Label className="text-start w-100">Telefono</Form.Label>
                             <Form.Control
                                 required
-                                type="text"
-                                placeholder="Apellidos"
+                                type="number"
+                                className='no-spinner'
+                                placeholder="123456789"
+                                value={telefono}
+                                onChange={(e) => setTelefono(e.target.value)}
                             />
-                            <Form.Control.Feedback type="invalid">Introduce tus apellidos</Form.Control.Feedback>
-                        </Form.Group>
-                        <br />
-                        <Form.Group controlId="formFechaNacimiento">
-                            <Form.Label className="text-start w-100">Fecha de Nacimiento</Form.Label>
-                            <DatePicker
-                                selected={birthDate}
-                                onChange={(date) => setBirthDate(date)}
-                                dateFormat="dd/MM/yyyy"
-                                className="form-control w-100"
-                                placeholderText="Selecciona una fecha"
-                                required
-                            />
-                            <Form.Control.Feedback type="invalid">Selecciona una fecha</Form.Control.Feedback>
+                            <Form.Control.Feedback type="invalid">Introduce un telefono</Form.Control.Feedback>
                         </Form.Group>
                         <br />
                         <Form.Group controlId="formEmail">
@@ -75,6 +156,8 @@ const Registro = () => {
                                 required
                                 type="email"
                                 placeholder="alguien@ejemplo.com"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                             />
                             <Form.Control.Feedback type="invalid">Introduce un email</Form.Control.Feedback>
                         </Form.Group>
@@ -85,6 +168,8 @@ const Registro = () => {
                                 required
                                 type="password"
                                 placeholder="Contraseña"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
                             />
                             <Form.Control.Feedback type="invalid">Introduce una contraseña</Form.Control.Feedback>
                         </Form.Group>

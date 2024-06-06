@@ -16,7 +16,8 @@ const Registro = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const [responseMessage, setResponseMessage] = useState(''); // Estado para guardar la respuesta
+    const [message, setMessage] = useState('');
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -25,24 +26,13 @@ const Registro = () => {
             event.stopPropagation();
         } else {
             try {
-                const response = await fetch('http://localhost:8090/usuarios/solicitudesCodigos', {
+
+                const registerResponse = await fetch(`http://localhost:8090/usuarios/register`, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/x-www-form-urlencoded'
                     },
-                    body: JSON.stringify({
-                        dni: dni
-                    })
-                });
-
-                const data = await response.text();
-                setResponseMessage(data);
-
-                const registerResponse = await fetch(`http://localhost:8090/usuarios/register/?codigoActivacion=${data}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    mode: 'no-cors',
                     body: JSON.stringify({
                         dni: dni,
                         nombreCompleto: nombre,
@@ -54,12 +44,19 @@ const Registro = () => {
                     })
                 });
 
-                const registerData = await registerResponse.text();
-                console.log(registerData);
-
+                if (registerResponse.ok) {
+                    setMessage('Registro exitoso.');
+                    setNombre('');
+                    setDni('');
+                    setTelefono('');
+                    setEmail('');
+                    setPassword('');
+                } else {
+                    setMessage('Error en el registro. Por favor, inténtalo de nuevo.');
+                }
             } catch (error) {
                 console.error('Error en el registro', error);
-                setError('Error en el registro. Por favor, inténtalo de nuevo.');
+                setMessage('Error en el registro. Por favor, inténtalo de nuevo.');
             }
         }
 
@@ -93,7 +90,7 @@ const Registro = () => {
                 <Card.Body>
                     <h1 className="text-center">Registro</h1>
                     <br/>
-                    {error && <p className="text-danger text-center">{error}</p>}
+                    {message && <p className={message.includes('Error') ? "text-danger text-center" : "text-success text-center"}>{message}</p>}
                     <Form noValidate validated={validated} onSubmit={handleSubmit}>
                         <Form.Group controlId="formNombre">
                             <Form.Label className="text-start w-100">Nombre</Form.Label>
@@ -127,7 +124,7 @@ const Registro = () => {
                                     <DatePicker
                                         selected={birthDate}
                                         onChange={(date) => setBirthDate(date)}
-                                        dateFormat="dd/MM/yyyy"
+                                        dateFormat="dd-MM-yyyy"
                                         className="form-control w-100"
                                         placeholderText="Selecciona una fecha"
                                         required

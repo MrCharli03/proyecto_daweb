@@ -15,9 +15,7 @@ const Registro = () => {
     const [telefono, setTelefono] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
     const [message, setMessage] = useState('');
-
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -26,19 +24,20 @@ const Registro = () => {
             event.stopPropagation();
         } else {
             try {
+                const formattedDate = birthDate ? birthDate.toISOString().split('T')[0] : '';
 
                 const registerResponse = await fetch(`http://localhost:8090/usuarios/register`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
                     mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
                     body: JSON.stringify({
                         dni: dni,
                         nombreCompleto: nombre,
                         username: email,
                         idOAuth: "",
-                        fechaNacimiento: birthDate,
+                        fechaNacimiento: formattedDate,
                         telefono: telefono,
                         password: password
                     })
@@ -52,7 +51,8 @@ const Registro = () => {
                     setEmail('');
                     setPassword('');
                 } else {
-                    setMessage('Error en el registro. Por favor, inténtalo de nuevo.');
+                    const errorData = await registerResponse.json();
+                    setMessage(`Error en el registro: ${errorData.message}`);
                 }
             } catch (error) {
                 console.error('Error en el registro', error);
@@ -124,7 +124,7 @@ const Registro = () => {
                                     <DatePicker
                                         selected={birthDate}
                                         onChange={(date) => setBirthDate(date)}
-                                        dateFormat="dd-MM-yyyy"
+                                        dateFormat="yyyy-MM-dd"
                                         className="form-control w-100"
                                         placeholderText="Selecciona una fecha"
                                         required

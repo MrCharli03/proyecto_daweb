@@ -22,45 +22,48 @@ const Registro = () => {
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
             event.stopPropagation();
+            setValidated(true);
         } else {
             try {
                 const formattedDate = birthDate ? birthDate.toISOString().split('T')[0] : '';
-
+    
+                const userData = {
+                    dni: dni,
+                    nombreCompleto: nombre,
+                    username: email,
+                    idOAuth: "",
+                    fechaNacimiento: formattedDate,
+                    telefono: telefono,
+                    password: password
+                };
+    
                 const registerResponse = await fetch(`http://localhost:8090/usuarios/register`, {
                     method: 'POST',
-                    mode: 'no-cors',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({
-                        dni: dni,
-                        nombreCompleto: nombre,
-                        username: email,
-                        idOAuth: "",
-                        fechaNacimiento: formattedDate,
-                        telefono: telefono,
-                        password: password
-                    })
+                    body: JSON.stringify(userData)
                 });
-
-                if (registerResponse.ok) {
-                    setMessage('Registro exitoso.');
+                
+                if (registerResponse.status === 204) {
+                    setMessage('Registro exitoso');
                     setNombre('');
                     setDni('');
                     setTelefono('');
                     setEmail('');
                     setPassword('');
-                } else {
-                    const errorData = await registerResponse.json();
-                    setMessage(`Error en el registro: ${errorData.message}`);
+                    setBirthDate(null);
+                    setValidated(false);  // Reset validation
                 }
+                else if (registerResponse.status === 400) {
+                    setMessage('Error en el registro. Por favor, inténtalo de nuevo.');
+                }
+
             } catch (error) {
                 console.error('Error en el registro', error);
                 setMessage('Error en el registro. Por favor, inténtalo de nuevo.');
             }
         }
-
-        setValidated(true);
     };
 
     const handleBackClick = () => {
@@ -126,7 +129,7 @@ const Registro = () => {
                                         onChange={(date) => setBirthDate(date)}
                                         dateFormat="yyyy-MM-dd"
                                         className="form-control w-100"
-                                        placeholderText="Selecciona una fecha"
+                                        placeholderText="yyyy-MM-dd"
                                         required
                                     />
                                     <Form.Control.Feedback type="invalid">Selecciona una fecha</Form.Control.Feedback>

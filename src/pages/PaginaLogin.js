@@ -1,6 +1,5 @@
 import React from 'react';
 import Login from '../componentes/Login';
-//import '../styles/PaginaLogin.css';
 
 const PaginaLogin = () => {
     return (

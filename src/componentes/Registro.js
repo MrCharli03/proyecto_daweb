@@ -28,7 +28,6 @@ const Registro = () => {
 
                 const registerResponse = await fetch(`http://localhost:8090/usuarios/register`, {
                     method: 'POST',
-                    mode: 'no-cors',
                     headers: {
                         'Content-Type': 'application/json'
                     },
@@ -50,14 +49,15 @@ const Registro = () => {
                     setTelefono('');
                     setEmail('');
                     setPassword('');
+                    setBirthDate('');
                 } else {
                     const errorData = await registerResponse.json();
                     setMessage(`Error en el registro: ${errorData.message}`);
                 }
             } catch (error) {
-                console.error('Error en el registro', error);
-                setMessage('Error en el registro. Por favor, inténtalo de nuevo.');
+                setMessage('Error en la conexión o en el servidor.');
             }
+
         }
 
         setValidated(true);
@@ -89,7 +89,7 @@ const Registro = () => {
             <Card className="p-4 rounded shadow-sm" style={{ width: '100%', maxWidth: '500px', margin: '0%' }}>
                 <Card.Body>
                     <h1 className="text-center">Registro</h1>
-                    <br/>
+                    <br />
                     {message && <p className={message.includes('Error') ? "text-danger text-center" : "text-success text-center"}>{message}</p>}
                     <Form noValidate validated={validated} onSubmit={handleSubmit}>
                         <Form.Group controlId="formNombre">
@@ -126,7 +126,7 @@ const Registro = () => {
                                         onChange={(date) => setBirthDate(date)}
                                         dateFormat="yyyy-MM-dd"
                                         className="form-control w-100"
-                                        placeholderText="Selecciona una fecha"
+                                        placeholderText="yyyy-MM-dd"
                                         required
                                     />
                                     <Form.Control.Feedback type="invalid">Selecciona una fecha</Form.Control.Feedback>
@@ -155,6 +155,7 @@ const Registro = () => {
                                 placeholder="alguien@ejemplo.com"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
+                                autoComplete='username'
                             />
                             <Form.Control.Feedback type="invalid">Introduce un email</Form.Control.Feedback>
                         </Form.Group>
@@ -167,6 +168,7 @@ const Registro = () => {
                                 placeholder="Contraseña"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
+                                autoComplete='current-password'
                             />
                             <Form.Control.Feedback type="invalid">Introduce una contraseña</Form.Control.Feedback>
                         </Form.Group>

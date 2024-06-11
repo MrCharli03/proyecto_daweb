@@ -4,9 +4,10 @@ import Button from 'react-bootstrap/Button';
 import { BsPencil, BsTrash, BsPlusCircleFill } from 'react-icons/bs';
 import { MdDirectionsBike } from "react-icons/md";
 import { FaCircleLeft } from "react-icons/fa6";
-import { FaKey, FaCalendarCheck } from "react-icons/fa";
+import { FaKey, FaCalendarCheck, FaSearch } from "react-icons/fa";
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
 import '../styles/Estaciones.css';
 
 const Estaciones = () => {
@@ -337,6 +338,35 @@ const Estaciones = () => {
                 <>
                     <h2>Estaciones</h2>
                     <br />
+                    <InputGroup>
+                        <Button style={{ textAlign: 'left', marginBottom: '1%', marginLeft: '3%', alignSelf: 'flex-start' }} ><FaSearch /></Button>
+                        <Form.Group>
+                            <Form.Control
+                                placeholder="Nombre"
+                                style={{ textAlign: 'left', marginBottom: '1%', alignSelf: 'flex-start', maxWidth: '200px', borderRadius: '0' }}
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Control
+                                placeholder="Código Postal"
+                                style={{ textAlign: 'left', marginBottom: '1%', alignSelf: 'flex-start', maxWidth: '200px', borderRadius: '0' }}
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Control
+                                placeholder="Número de puestos"
+                                style={{ textAlign: 'left', marginBottom: '1%', alignSelf: 'flex-start', maxWidth: '200px', borderRadius: '0' }}
+                            />
+                        </Form.Group>
+                        {userRole === 'Gestor' && (
+                            <div style={{ textAlign: 'left', marginBottom: '1%', marginLeft: '1%', alignSelf: 'flex-start' }}>
+                                <Button className='custom-button' onClick={handleAddEstacion}>
+                                    <BsPlusCircleFill /> Agregar Estación
+                                </Button>
+                            </div>
+                        )}
+                    </InputGroup>
+
                     <div style={{ maxHeight: '450px', overflowY: 'auto', width: '95%' }}>
 
                         <Table striped bordered hover variant="dark">
@@ -390,8 +420,6 @@ const Estaciones = () => {
                             </tbody>
                         </Table>
                     </div>
-                    <br />
-                    {userRole === 'Gestor' && (<Button className='custom-button' onClick={handleAddEstacion}><BsPlusCircleFill /> Agregar Estación</Button>)}
                 </>
             )}
 

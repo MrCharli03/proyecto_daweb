@@ -343,19 +343,19 @@ const Estaciones = () => {
                         <Form.Group>
                             <Form.Control
                                 placeholder="Nombre"
-                                style={{ textAlign: 'left', marginBottom: '1%', alignSelf: 'flex-start', maxWidth: '200px', borderRadius: '0' }}
+                                style={{ textAlign: 'left', marginBottom: '1%', alignSelf: 'flex-start', width: '300px', borderRadius: '0' }}
                             />
                         </Form.Group>
                         <Form.Group>
                             <Form.Control
                                 placeholder="Código Postal"
-                                style={{ textAlign: 'left', marginBottom: '1%', alignSelf: 'flex-start', maxWidth: '200px', borderRadius: '0' }}
+                                style={{ textAlign: 'left', marginBottom: '1%', alignSelf: 'flex-start', width: '150px', borderRadius: '0' }}
                             />
                         </Form.Group>
                         <Form.Group>
                             <Form.Control
                                 placeholder="Número de puestos"
-                                style={{ textAlign: 'left', marginBottom: '1%', alignSelf: 'flex-start', maxWidth: '200px', borderRadius: '0' }}
+                                style={{ textAlign: 'left', marginBottom: '1%', alignSelf: 'flex-start', width: '170px', borderTopLeftRadius: '0', borderBottomLeftRadius: '0' }}
                             />
                         </Form.Group>
                         {userRole === 'Gestor' && (

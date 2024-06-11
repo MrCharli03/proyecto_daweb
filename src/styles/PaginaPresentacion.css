@@ -1,11 +1,10 @@
 .main-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Añade esta línea */
-    min-height: 100vh;
-  }
-  
-  .main-content {
-    flex: 1;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+}

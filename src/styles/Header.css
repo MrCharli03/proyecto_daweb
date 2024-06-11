@@ -8,6 +8,8 @@
 
 .header-gestor {
   background-color: var(--atomic-tangerine);
+  grid-template-columns: 1fr auto;
+  padding: 10px;
 }
 
 .logo-font {

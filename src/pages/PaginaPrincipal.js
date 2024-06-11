@@ -1,17 +1,16 @@
 import React from 'react';
 import Header2 from '../componentes/Header2';
+import Principal from '../componentes/Principal';
 import Footer from '../componentes/Footer';
-import '../styles/PaginaPresentacion.css';
-import Saludo from '../componentes/Saludo';
 
-const PaginaSaludo = () => {
+const PaginaPrincipal = () => {
     return (
         <div className="main-container">
             <Header2 />
-            <Saludo />
+            <Principal />
             <Footer />
         </div>
     );
 }
 
-export default PaginaSaludo;
+export default PaginaPrincipal;

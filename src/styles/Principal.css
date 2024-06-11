@@ -1,0 +1,40 @@
+@import url('colors.css');
+
+.tabs-container {
+    flex-direction: column;
+    height: 100%;
+    flex: 1;
+    background-color: var(--blue);
+    color: var(--white);
+    padding-top: 10px;
+}
+
+.tabs-container .tab-contenedor {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+    padding: 20px;
+
+}
+
+/* Estilo para pestañas seleccionadas */
+.tabs-container .nav-link.active {
+    background-color: var(--olive) !important;
+    color: var(--white) !important;
+    border-color: var(--black) !important;
+    font-weight: bold;
+}
+
+/* Estilo para pestañas no seleccionadas */
+.tabs-container .nav-link {
+    background-color: var(--lapis-lazuli) !important;
+    color: var(--white) !important;
+    border-color: var(--black) !important;
+}
+
+/* Estilo para la línea debajo de las pestañas */
+.tabs-container .nav-tabs {
+    border-bottom: 2px solid var(--black);
+}

@@ -1,10 +1,10 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
-import '../styles/MainContent.css'; // Descomenta esta línea para importar los estilos
 import ImageEstacion from '../images/aparcarBici.jpg'
 import ImageBici from '../images/biciCiudad.jpg'
 import ImageCatedral from '../images/catedral.jpg'
+import '../styles/MainContent.css';
 
 const MainContent = () => {
   return (

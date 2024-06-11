@@ -4,7 +4,8 @@ import PaginaPresentacion from './pages/PaginaPresentacion';
 import PaginaLogin from './pages/PaginaLogin';
 import './App.css';
 import PaginaRegistro from './pages/PaginaRegistro';
-import PaginaSaludo from './pages/PaginaSaludo';
+import PaginaPrincipal from './pages/PaginaPrincipal';
+import GitHubCallback from './pages/GitHubCallBack';
 
 
 function App() {
@@ -15,7 +16,8 @@ function App() {
           <Route path="/" element={<PaginaPresentacion />} />
           <Route path="/auth/login" element={<PaginaLogin />} />
           <Route path="/register" element={<PaginaRegistro />} />
-          <Route path="/saludo" element={<PaginaSaludo />} />
+          <Route path="/callback/github" element={<GitHubCallback />} />
+          <Route path="/principal" element={<PaginaPrincipal />} />
         </Routes>
       </div>
     </Router>

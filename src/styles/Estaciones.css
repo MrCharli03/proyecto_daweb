@@ -1,0 +1,25 @@
+@import url('colors.css');
+
+.custom-button {
+    background-color: var(--olive);
+    color: white;
+    border: none;
+}
+
+.custom-button:hover {
+    background-color: var(--dark-olive);
+}
+
+.custom-button:active {
+    background-color: var(--dark-olive) !important;
+}
+
+.verde {
+    color: var(--olive) !important;
+    font-weight: bold;
+}
+
+.rojo {
+    color: red !important;
+    font-weight: bold;
+}

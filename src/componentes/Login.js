@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Form, Button, Card } from 'react-bootstrap';
 import { FaGithub } from 'react-icons/fa';
 import '../styles/Login.css';
@@ -10,6 +10,7 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -38,11 +39,9 @@ const Login = () => {
                 sessionStorage.setItem('jwtToken', data.token);
                 sessionStorage.setItem('userRole', data.rol);
 
-                console.log("Login existoso: ", data);
-                // Aquí puedes guardar el token en el almacenamiento local o en el estado de la aplicación
-                // y redirigir al usuario a la página correspondiente
+                console.log("Login exitoso: ", data);
 
-                navigate('/saludo');
+                navigate('/principal');
             } catch (error) {
                 console.error('Error en el login', error);
                 setError('Error en el login. Por favor, inténtalo de nuevo.');
@@ -57,8 +56,37 @@ const Login = () => {
     };
 
     const handleGitHubLogin = () => {
-        // Add your GitHub login logic here
+        /*// Abre una nueva ventana para la autenticación con GitHub
+        const width = 600, height = 600;
+        const left = (window.innerWidth / 2) - (width / 2);
+        const top = (window.innerHeight / 2) - (height / 2);
+
+        window.open(
+            'http://localhost:8090/auth/oauth2', 
+            '_blank', 
+            `width=${width},height=${height},top=${top},left=${left}`
+        );*/
+        window.location.href = 'http://localhost:8090/auth/oauth2';
     };
+
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        const base64Credenciales = params.get('credenciales');
+
+        if (base64Credenciales) {
+            const jsonResponse = atob(base64Credenciales);
+            const { token, rol } = JSON.parse(jsonResponse);
+
+            console.log("Token:", token);
+            console.log("Rol:", rol);
+
+            if (token) {
+                sessionStorage.setItem('jwtToken', token);
+                sessionStorage.setItem('userRole', rol);
+                navigate('/principal');
+            }
+        }
+    }, [location, navigate]);
 
     const handleRegisterClick = () => {
         navigate('/register');
@@ -66,7 +94,7 @@ const Login = () => {
 
     return (
         <div className="d-flex justify-content-center align-items-center min-vh-100 fondo">
-            <Card className="p-4 rounded shadow-sm" style={{ width: '100%', maxWidth: '500px' , margin: '5%'}}>
+            <Card className="p-4 rounded shadow-sm" style={{ width: '100%', maxWidth: '500px', margin: '5%' }}>
                 <Card.Body>
                     <h1 className="text-center">Login</h1>
                     <br/>

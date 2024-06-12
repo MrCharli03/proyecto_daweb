@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Form, Button, Card, Col, Row } from 'react-bootstrap';
+import { Form, Button, Card, Col, Row, Modal } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -16,6 +16,8 @@ const Registro = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
+    const [exitoMessage, setExitoMessage] = useState('');
+    const [showExitoDialog, setShowExitoDialog] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -26,7 +28,7 @@ const Registro = () => {
         } else {
             try {
                 const formattedDate = birthDate ? birthDate.toISOString().split('T')[0] : '';
-    
+
                 const userData = {
                     dni: dni,
                     nombreCompleto: nombre,
@@ -36,7 +38,7 @@ const Registro = () => {
                     telefono: telefono,
                     password: password
                 };
-    
+
                 const registerResponse = await fetch(`http://localhost:8090/usuarios/register`, {
                     method: 'POST',
                     headers: {
@@ -44,17 +46,17 @@ const Registro = () => {
                     },
                     body: JSON.stringify(userData)
                 });
-                
+
                 if (registerResponse.status === 204) {
-                    setMessage('Registro exitoso');
+                    setExitoMessage('Registro exitoso');
                     setNombre('');
                     setDni('');
                     setTelefono('');
                     setEmail('');
                     setPassword('');
                     setBirthDate(null);
-                    setValidated(false);  // Reset validation
-
+                    setValidated(false);
+                    setShowExitoDialog(true);
                 }
                 else if (registerResponse.status === 400) {
                     setMessage('Error en el registro. Por favor, inténtalo de nuevo.');
@@ -87,6 +89,21 @@ const Registro = () => {
             window.removeEventListener('wheel', handleWheel);
         };
     }, []);
+
+    const ExitoModal = ({ show, onClose, message }) => {
+        return (
+            <Modal show={show} onHide={onClose} centered backdrop="static" size="sm">
+                <Modal.Header className="bg-success justify-content-center">
+                    <Modal.Title style={{ fontWeight: 'bold', color: '#fff' }}>{message}</Modal.Title>
+                </Modal.Header>
+                <Modal.Footer className="bg-success justify-content-center">
+                    <Button variant="dark" onClick={handleBackClick}>
+                        OK
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        );
+    };
 
     return (
         <div className="d-flex justify-content-center align-items-center min-vh-100 fondo">
@@ -181,7 +198,7 @@ const Registro = () => {
                             <Button variant="secondary" onClick={handleBackClick}>
                                 Volver Atrás
                             </Button>
-                            <Button type="submit" variant="primary">
+                            <Button type="submit" variant="primary" >
                                 Registrar
                             </Button>
                             <Button variant="link" onClick={handleLoginClick}>
@@ -191,7 +208,13 @@ const Registro = () => {
                     </Form>
                 </Card.Body>
             </Card>
+            <ExitoModal
+                show={showExitoDialog}
+                onClose={() => setShowExitoDialog(false)}
+                message={exitoMessage}
+            />
         </div>
+
     );
 }
 

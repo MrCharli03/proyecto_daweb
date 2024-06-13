@@ -18,13 +18,13 @@ const Header2 = () => {
   return (
     <Navbar expand="lg" className={`header ${isGestor ? 'header-gestor' : ''}`}>
       <Navbar.Brand href="#">
-        <Image style={{ marginLeft: '10px' }} src={ImageLogo} roundedCircle className="logo-image"/>
+        <Image style={{ marginLeft: '10px' }} src={ImageLogo} roundedCircle className="logo-image" />
         <span style={{ marginLeft: '10px' }} className='logo-font'>CityBike</span>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
         <Nav className="auth-buttons">
-          <Link to="/" className="btn btn-dark" style={{ marginRight: '70px' }}>Logout</Link>
+          <Link to="/" className="btn btn-dark" style={{ marginRight: '70px' }}>Cerrar Sesión</Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>

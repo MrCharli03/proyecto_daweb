@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import Table from 'react-bootstrap/Table';
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
+import { Modal, Button, Table, Container } from 'react-bootstrap';
 
 const Bicis = () => {
     const [bicicletas, setBicicletas] = useState([]);
@@ -105,9 +103,9 @@ const Bicis = () => {
             <h2>Bicis</h2>
             <br />
 
-            <div style={{ maxHeight: '450px', overflowY: 'auto', width: '95%' }}>
-                <Table striped bordered hover variant="dark">
-                    <thead>
+            <Container fluid className="table-container" style={{ maxHeight: '450px', overflowY: 'auto', width: '95%', padding: '0' }}>
+                <Table striped bordered hover variant="dark" className='table-container'>
+                    <thead className='sticky-header'>
                         <tr>
                             <th>Modelo</th>
                             <th>Fecha de Alta</th>
@@ -124,7 +122,11 @@ const Bicis = () => {
                                 <td>{new Date(bici.fechaAlta).toLocaleDateString()}</td>
                                 <td>{bici.fechaBaja ? new Date(bici.fechaBaja).toLocaleDateString() : '-'}</td>
                                 <td>{bici.motivo || '-'}</td>
-                                <td className={bici.estado === 'DISPONIBLE' ? 'verde' : 'rojo'}>{bici.estado}</td>
+                                <td className={
+                                    bici.estado === 'DISPONIBLE' ? 'verde' :
+                                        bici.estado === 'RESERVADA' ? 'naranja' :
+                                            'rojo'
+                                }>{bici.estado}</td>
                                 <td>
                                     {bici.estacionID !== null ? (
                                         <a href={`https://www.google.es/maps?q=${getEstacionLat(bici.estacionID)},${getEstacionLng(bici.estacionID)}`} target="_blank" rel="noopener noreferrer" style={{ color: "lightblue", textDecoration: 'underline' }}>
@@ -136,7 +138,7 @@ const Bicis = () => {
                         ))}
                     </tbody>
                 </Table>
-            </div>
+            </Container>
             <ErrorModal
                 show={showErrorDialog}
                 onClose={() => setShowErrorDialog(false)}

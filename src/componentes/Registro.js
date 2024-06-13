@@ -118,7 +118,7 @@ const Registro = () => {
                             <Form.Control
                                 required
                                 type="text"
-                                placeholder="Nombre"
+                                placeholder="Nombre Completo"
                                 value={nombre}
                                 onChange={(e) => setNombre(e.target.value)}
                             />

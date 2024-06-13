@@ -1,14 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import Table from 'react-bootstrap/Table';
-import Button from 'react-bootstrap/Button';
+import { Modal, Button, Table, Form, InputGroup, Container } from 'react-bootstrap';
 import { BsFillPencilFill, BsPlusCircleFill } from 'react-icons/bs';
 import { MdDirectionsBike, MdCleaningServices } from "react-icons/md";
 import { FaCircleLeft } from "react-icons/fa6";
 import { FaKey, FaCalendarCheck, FaSearch, FaTrash } from "react-icons/fa";
 import { BiSolidDislike } from 'react-icons/bi';
-import Modal from 'react-bootstrap/Modal';
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
 import '../styles/Estaciones.css';
 import '../styles/Registro.css';
 
@@ -17,6 +13,7 @@ const Estaciones = () => {
     const [error, setError] = useState('');
     const [showErrorDialog, setShowErrorDialog] = useState(false);
     const [info, setInfo] = useState('');
+    const [infoTitle, setInfoTitle] = useState('');
     const [showInfoDialog, setShowInfoDialog] = useState(false);
     const [showConfirmDialog, setShowConfirmDialog] = useState(false);
     const [selectedEstacionId, setSelectedEstacionId] = useState(null);
@@ -47,8 +44,11 @@ const Estaciones = () => {
     const [nombreActual, setNombreActual] = useState(null);
     const [showAddBiciDialog, setShowAddBiciDialog] = useState(false);
     const [addModelo, setAddModelo] = useState('');
+    const [showAlquilerDialog, setShowAlquilerDialog] = useState(false);
+    const [showReservaDialog, setShowReservaDialog] = useState(false);
 
     const userRole = sessionStorage.getItem('userRole');
+    const username = sessionStorage.getItem('username');
 
     const fetchEstaciones = useCallback(async () => {
         const jwtToken = sessionStorage.getItem('jwtToken');
@@ -273,6 +273,7 @@ const Estaciones = () => {
             } else {
                 setEstacionVerBicis(nombre);
                 setInfo('Esta estación no tiene bicis');
+                setInfoTitle('Atención');
                 setShowInfoDialog(true);
             }
         } catch (error) {
@@ -424,6 +425,78 @@ const Estaciones = () => {
         setAddModelo('');
     };
 
+    const handleAlquiler = (idBici) => {
+        setSelectedBiciId(idBici);
+        setShowAlquilerDialog(true);
+    };
+
+    const handleAlquilerConfirmar = async () => {
+        const jwtToken = sessionStorage.getItem('jwtToken');
+
+        try {
+            const response = await fetch(`http://localhost:8090/alquileres/usuarios/${username}/bicicletas/${selectedBiciId}`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${jwtToken}`,
+                    'Content-Type': 'application/json'
+                },
+            });
+
+            if (!response.ok) {
+                setError("Hubo un error al alquilar la bici, puede que ya tengas un alquiler/reserva activos o la bici ya esté reservada");
+                setShowErrorDialog(true);
+                setShowAlquilerDialog(false);
+            } else {
+                console.log('La alquiler se realizó correctamente');
+                setShowAlquilerDialog(false);
+                verBicicletasEstacion(estacionActual, nombreActual);
+            }
+
+        } catch (error) {
+            console.error('Error al crear la bici:', error);
+            setError('Error interno');
+            setShowErrorDialog(true);
+        }
+    };
+
+    const handleReservar = (idBici) => {
+        setSelectedBiciId(idBici);
+        setShowReservaDialog(true);
+    };
+
+    const handleReservaConfirmar = async () => {
+        const jwtToken = sessionStorage.getItem('jwtToken');
+        const formData = new URLSearchParams();
+
+        formData.append('idUsuario', username);
+        formData.append('idBici', selectedBiciId);
+
+        try {
+            const response = await fetch(`http://localhost:8090/alquileres/reservas`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${jwtToken}`,
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: formData
+            });
+
+            if (!response.ok) {
+                setError("Hubo un error al reservar la bici, puede que ya tengas un alquiler/reserva activos o la bici ya esté reservada");
+                setShowErrorDialog(true);
+                setShowReservaDialog(false);
+            } else {
+                console.log('La alquiler se realizó correctamente');
+                setShowReservaDialog(false);
+                verBicicletasEstacion(estacionActual, nombreActual);
+            }
+        } catch (error) {
+            console.error('Error al crear la bici:', error);
+            setError('Error interno');
+            setShowErrorDialog(true);
+        }
+    };
+
     const ErrorModal = ({ show, onClose, errorMessage }) => {
         return (
             <Modal show={show} onHide={onClose} centered backdrop="static" size="sm">
@@ -498,11 +571,11 @@ const Estaciones = () => {
         );
     };
 
-    const InfoModal = ({ show, onClose, message }) => {
+    const InfoModal = ({ show, onClose, title, message }) => {
         return (
             <Modal show={show} onHide={onClose} centered backdrop="static" size="sm">
                 <Modal.Header className='bg-info justify-content-center'>
-                    <Modal.Title style={{ fontWeight: 'bold' }}>Atención</Modal.Title>
+                    <Modal.Title style={{ fontWeight: 'bold' }}>{title}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className='bg-info' style={{ textAlign: 'center' }}>
                     {message}
@@ -516,20 +589,60 @@ const Estaciones = () => {
         );
     };
 
+    const AlquilerModal = ({ show, onClose, onConfirm, message }) => {
+        return (
+            <Modal show={show} onHide={onClose} centered backdrop="static" size="sm">
+                <Modal.Header className='bg-info justify-content-center'>
+                    <Modal.Title style={{ fontWeight: 'bold' }}>Alquilar</Modal.Title>
+                </Modal.Header>
+                <Modal.Body className='bg-info' style={{ textAlign: 'center' }}>
+                    {message}
+                </Modal.Body>
+                <Modal.Footer className='bg-info justify-content-center'>
+                    <Button variant="secondary" onClick={onClose}>
+                        Cancelar
+                    </Button>
+                    <Button variant="dark" onClick={onConfirm}>
+                        Alquilar <FaKey />
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        );
+    };
+
+    const ReservaModal = ({ show, onClose, onConfirm, message }) => {
+        return (
+            <Modal show={show} onHide={onClose} centered backdrop="static" size="sm">
+                <Modal.Header className='bg-info justify-content-center'>
+                    <Modal.Title style={{ fontWeight: 'bold' }}>Reservar</Modal.Title>
+                </Modal.Header>
+                <Modal.Body className='bg-info' style={{ textAlign: 'center' }}>
+                    {message}
+                </Modal.Body>
+                <Modal.Footer className='bg-info justify-content-center'>
+                    <Button variant="secondary" onClick={onClose}>
+                        Cancelar
+                    </Button>
+                    <Button variant="dark" onClick={onConfirm}>
+                        Reservar <FaCalendarCheck />
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        );
+    };
+
     return (
         <div className="tab-contenedor">
             {estacionVerBicis ? (
                 <>
                     <h2>{estacionVerBicis}</h2>
                     <br />
-                    <div style={{ maxHeight: '450px', overflowY: 'auto', width: '70%' }}>
-                        <Table striped bordered hover variant="dark">
-                            <thead>
+                    <Container fluid className="table-container" style={{ maxHeight: '450px', overflowY: 'auto', width: '70%', padding: '0' }}>
+                        <Table striped bordered hover variant="dark" className="table-container">
+                            <thead className='sticky-header'>
                                 <tr>
                                     <th>Modelo</th>
                                     <th>Fecha de Alta</th>
-                                    <th>Fecha de Baja</th>
-                                    <th>Motivo</th>
                                     <th>Estado</th>
                                     <th>Acciones</th>
                                 </tr>
@@ -539,9 +652,11 @@ const Estaciones = () => {
                                     <tr key={bici._id}>
                                         <td>{bici.modelo}</td>
                                         <td>{new Date(bici.fechaAlta).toLocaleDateString()}</td>
-                                        <td>{bici.fechaBaja ? new Date(bici.fechaBaja).toLocaleDateString() : '-'}</td>
-                                        <td>{bici.motivo || '-'}</td>
-                                        <td className={bici.estado === 'DISPONIBLE' ? 'verde' : 'rojo'}>{bici.estado}</td>
+                                        <td className={
+                                            bici.estado === 'DISPONIBLE' ? 'verde' :
+                                                bici.estado === 'RESERVADA' ? 'naranja' :
+                                                    'rojo'
+                                        }>{bici.estado}</td>
                                         <td>
                                             <div>
                                                 {userRole === 'Gestor' && (
@@ -551,12 +666,16 @@ const Estaciones = () => {
                                                         </Button>
                                                     </>
                                                 )}
-                                                <Button className='custom-button' style={{ marginRight: '10px', borderRadius: '50%' }} title="Reservar">
-                                                    <FaCalendarCheck />
-                                                </Button>
-                                                <Button className='custom-button' style={{ borderRadius: '50%' }} title="Alquilar">
-                                                    <FaKey />
-                                                </Button>
+                                                {bici.estado === 'DISPONIBLE' && (
+                                                    <>
+                                                        <Button className='custom-button' style={{ marginRight: '10px', borderRadius: '50%' }} title="Reservar" onClick={() => handleReservar(bici.id)}>
+                                                            <FaCalendarCheck />
+                                                        </Button>
+                                                        <Button className='custom-button' style={{ borderRadius: '50%' }} title="Alquilar" onClick={() => handleAlquiler(bici.id)}>
+                                                            <FaKey />
+                                                        </Button>
+                                                    </>
+                                                )}
                                             </div>
                                         </td>
                                     </tr>
@@ -564,7 +683,7 @@ const Estaciones = () => {
                             </tbody>
                         </Table>
 
-                    </div>
+                    </Container>
                     <div style={{ mariginTop: '10px', display: 'flex', justifyContent: 'center' }}>
                         <Button onClick={volverAEstaciones} variant='secondary' style={{ marginRight: '10px' }}><FaCircleLeft /> Volver</Button>
                         {userRole === 'Gestor' && (
@@ -622,10 +741,9 @@ const Estaciones = () => {
                         )}
                     </InputGroup>
 
-                    <div style={{ maxHeight: '450px', overflowY: 'auto', width: '85%' }}>
-
-                        <Table striped bordered hover variant="dark">
-                            <thead>
+                    <Container fluid className="table-container" style={{ maxHeight: '450px', overflowY: 'auto', width: '85%', padding: '0' }}>
+                        <Table striped bordered hover variant="dark" className='table-container'>
+                            <thead className="sticky-header">
                                 <tr>
                                     <th>Nombre</th>
                                     <th>Bicicletas</th>
@@ -676,7 +794,7 @@ const Estaciones = () => {
                                 ))}
                             </tbody>
                         </Table>
-                    </div>
+                    </Container>
                 </>
             )
             }
@@ -706,7 +824,20 @@ const Estaciones = () => {
             <InfoModal
                 show={showInfoDialog}
                 onClose={() => setShowInfoDialog(false)}
+                title={infoTitle}
                 message={info}
+            />
+            <AlquilerModal
+                show={showAlquilerDialog}
+                onClose={() => setShowAlquilerDialog(false)}
+                onConfirm={handleAlquilerConfirmar}
+                message="¿Quieres alquilar esta bici?"
+            />
+            <ReservaModal
+                show={showReservaDialog}
+                onClose={() => setShowReservaDialog(false)}
+                onConfirm={handleReservaConfirmar}
+                message="¿Quieres reservar esta bici?"
             />
             <Modal show={showEditDialog} onHide={() => setShowEditDialog(false)} centered backdrop="static">
                 <Modal.Header className="justify-content-center">

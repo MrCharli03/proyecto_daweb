@@ -3,6 +3,7 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import Estaciones from './Estaciones';
 import Bicis from './Bicis';
+import ReservasAlquileres from './ReservasAlquileres';
 import '../styles/Principal.css';
 
 const Principal = () => {
@@ -25,10 +26,7 @@ const Principal = () => {
                     {activeKey === 'estaciones' && <Estaciones />}
                 </Tab>
                 <Tab eventKey="reservasAlquileres" title="Reservas y Alquileres">
-                    Reservas y Alquileres
-                </Tab>
-                <Tab eventKey="activo" title="Activo">
-                    Reserva/Alquiler activo
+                    {activeKey === 'reservasAlquileres' && <ReservasAlquileres />}
                 </Tab>
                 {userRole === 'Gestor' && (
                     <Tab eventKey="bicis" title="Bicis">

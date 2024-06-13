@@ -38,6 +38,7 @@ const Login = () => {
 
                 sessionStorage.setItem('jwtToken', data.token);
                 sessionStorage.setItem('userRole', data.rol);
+                sessionStorage.setItem('username', data.username);
 
                 console.log("Login exitoso: ", data);
 
@@ -96,7 +97,7 @@ const Login = () => {
         <div className="d-flex justify-content-center align-items-center min-vh-100 fondo">
             <Card className="p-4 rounded shadow-sm" style={{ width: '100%', maxWidth: '500px', margin: '5%' }}>
                 <Card.Body>
-                    <h1 className="text-center">Login</h1>
+                    <h1 className="text-center">Iniciar Sesión</h1>
                     <br/>
                     {error && <p className="text-danger text-center">{error}</p>}
                     <Form noValidate validated={validated} onSubmit={handleSubmit}>
@@ -130,7 +131,7 @@ const Login = () => {
                         <br/>
                         <div className="d-flex flex-column gap-2">
                             <Button type="submit" variant="primary">
-                                Login
+                                Iniciar sesión
                             </Button>
                             <div className="separator d-flex align-items-center">
                                 <span className="line flex-grow-1"></span>
@@ -138,7 +139,7 @@ const Login = () => {
                                 <span className="line flex-grow-1"></span>
                             </div>
                             <Button variant="dark" onClick={handleGitHubLogin} className="github-button">
-                                <FaGithub /> Login with GitHub
+                                <FaGithub /> Iniciar sesión with GitHub
                             </Button>
                             <Button variant="link" onClick={handleRegisterClick}>
                                 ¿No tienes una cuenta? Regístrate

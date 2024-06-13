@@ -16,7 +16,7 @@ const Header = () => {
       <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
         <Nav className="auth-buttons">
           <Link to="/register" className="btn btn-secondary">Regístrate</Link>
-          <Link to="/auth/login" className="btn btn-dark" style={{ marginRight: '70px' }}>Login</Link>
+          <Link to="/auth/login" className="btn btn-dark" style={{ marginRight: '70px' }}>Inicar Sesión</Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>

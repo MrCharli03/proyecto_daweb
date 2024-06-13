@@ -42,15 +42,3 @@
 .no-spinner {
     -moz-appearance: textfield;
 }
-
-.modal-container-corto {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-.modal-content-corto {
-    background-color: transparent !important;
-    border: none;
-}

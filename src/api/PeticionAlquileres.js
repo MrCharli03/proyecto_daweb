@@ -66,5 +66,7 @@ export const aparcarBici = async (username, estacionId, jwtToken) => {
         throw new Error('Error parking the bike.');
     }
 
-    return await response.json();
+    // Handle empty response body
+    const responseText = await response.text();
+    return responseText ? JSON.parse(responseText) : {};
 };

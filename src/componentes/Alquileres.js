@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Table, Container, Button, Modal, Form } from 'react-bootstrap';
 import { FaParking } from "react-icons/fa";
-import { fetchReservas, fetchEstaciones, fetchBici } from '../api/PeticionAlquileres';
+import { fetchReservas, fetchEstaciones, fetchBici, aparcarBici } from '../api/PeticionAlquileres';
 
 const Alquileres = () => {
     const [alquileres, setAlquileres] = useState([]);
@@ -91,29 +91,16 @@ const Alquileres = () => {
         const jwtToken = sessionStorage.getItem('jwtToken');
 
         try {
-            const response = await fetch(`http://localhost:8090/alquileres/usuarios/${username}/estaciones/${selectedEstacionId}`, {
-                method: 'PUT',
-                headers: {
-                    'Authorization': `Bearer ${jwtToken}`,
-                    'Content-Type': 'application/json'
-                },
-            });
-
-            if (!response.ok) {
-                setError("Hubo un error al aparcar la bici, puede que ya tengas un alquiler/reserva activos o la bici ya esté reservada");
-                setShowErrorDialog(true);
-                setShowAparcarDialog(false);
-            } else {
-                console.log('El aparcamiento se realizó correctamente');
-                setShowAparcarDialog(false);
-                fetchAlquileres();
-                setSelectedEstacionId(null); // Resetear la estación seleccionada
-            }
-
+            await aparcarBici(username, selectedEstacionId, jwtToken);
+            console.log('El aparcamiento se realizó correctamente');
+            setShowAparcarDialog(false);
+            fetchAlquileres();
+            setSelectedEstacionId(null); // Resetear la estación seleccionada
         } catch (error) {
             console.error('Error al aparcar la bici:', error);
-            setError('Error interno');
+            setError('Hubo un error al aparcar la bici, puede que ya tengas un alquiler/reserva activos o la bici ya esté reservada');
             setShowErrorDialog(true);
+            setShowAparcarDialog(false);
         }
     };
 

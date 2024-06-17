@@ -3,7 +3,8 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import Estaciones from './Estaciones';
 import Bicis from './Bicis';
-import ReservasAlquileres from './ReservasAlquileres';
+import Reservas from './Reservas';
+import Alquileres from './Alquileres';
 import '../styles/Principal.css';
 
 const Principal = () => {
@@ -19,14 +20,18 @@ const Principal = () => {
             <Tabs
                 activeKey={activeKey}
                 onSelect={handleSelect}
-                id="uncontrolled-tab-example"
+                id="justify-tab-example"
                 className="mb-3"
+                justify
             >
                 <Tab eventKey="estaciones" title="Estaciones">
                     {activeKey === 'estaciones' && <Estaciones />}
                 </Tab>
-                <Tab eventKey="reservasAlquileres" title="Reservas y Alquileres">
-                    {activeKey === 'reservasAlquileres' && <ReservasAlquileres />}
+                <Tab eventKey="reservas" title="Reservas">
+                    {activeKey === 'reservas' && <Reservas />}
+                </Tab>
+                <Tab eventKey="alquileres" title="Alquileres">
+                    {activeKey === 'alquileres' && <Alquileres />}
                 </Tab>
                 {userRole === 'Gestor' && (
                     <Tab eventKey="bicis" title="Bicis">

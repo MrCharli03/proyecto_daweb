@@ -159,34 +159,40 @@ const Reservas = () => {
             <h2>Reservas</h2>
             <br />
             <Container fluid className="table-container" style={{ maxHeight: '450px', overflowY: 'auto', width: '100%', padding: '0' }}>
-                <Table striped bordered hover variant="dark" className="table-responsive w-100 table-container">
-                    <thead className='sticky-header'>
-                        <tr>
-                            <th>Bici</th>
-                            <th>Fecha de Reserva</th>
-                            <th>Fecha de Caducidad</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {sortedReservas.map(reserva => (
-                            <tr key={reserva.id}>
-                                <td>{getBiciNombre(reserva.idBicicleta)}</td>
-                                <td>{formatFechaHora(reserva.creada)}</td>
-                                <td>{formatFechaHora(reserva.caducidad)}</td>
-                                <td className={reserva.caducada ? 'rojo' : 'blanco'}>{reserva.caducada ? 'Caducada' : 'Activa'}</td>
-                                <td>
-                                    {!reserva.caducada && (
-                                        <Button className='custom-button' style={{ marginRight: '10px', borderRadius: '50%' }} title="Alquilar" onClick={() => handleAlquiler()}>
-                                            <FaKey />
-                                        </Button>
-                                    )}
-                                </td>
+                {sortedReservas.length === 0 ? (
+                    <div style={{ textAlign: 'center', fontSize: '24px', fontWeight: 'bold', color: 'white' }}>
+                        No hay reservas realizadas
+                    </div>
+                ) : (
+                    <Table striped bordered hover variant="dark" className="table-responsive w-100 table-container">
+                        <thead className='sticky-header'>
+                            <tr>
+                                <th>Bici</th>
+                                <th>Fecha de Reserva</th>
+                                <th>Fecha de Caducidad</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </Table>
+                        </thead>
+                        <tbody>
+                            {sortedReservas.map(reserva => (
+                                <tr key={reserva.id}>
+                                    <td>{getBiciNombre(reserva.idBicicleta)}</td>
+                                    <td>{formatFechaHora(reserva.creada)}</td>
+                                    <td>{formatFechaHora(reserva.caducidad)}</td>
+                                    <td className={reserva.caducada ? 'rojo' : 'blanco'}>{reserva.caducada ? 'Caducada' : 'Activa'}</td>
+                                    <td>
+                                        {!reserva.caducada && (
+                                            <Button className='custom-button' style={{ marginRight: '10px', borderRadius: '50%' }} title="Alquilar" onClick={() => handleAlquiler()}>
+                                                <FaKey />
+                                            </Button>
+                                        )}
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </Table>
+                )}
             </Container>
             <ErrorModal
                 show={showErrorDialog}

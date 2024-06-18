@@ -11,7 +11,7 @@ export const fetchReservas = async (username, jwtToken) => {
     if (response.status === 404) {
         return { error: 'No reservations or rentals found' };
     } else if (!response.ok) {
-        throw new Error('Error fetching reservations.');
+        throw new Error('Error al realizar la solicitud fetchReservas.');
     } else {
         return await response.json();
     }
@@ -41,15 +41,14 @@ export const fetchEstaciones = async (jwtToken) => {
     });
 
     if (!response.ok) {
-        const errorDetails = await response.json();
-        throw new Error(`Error fetching stations: ${errorDetails.message || 'Unknown error'}`);
+        throw new Error('Error al realizar la solicitud fetchBicis.');
     }
 
     const data = await response.json();
     if (data.hasOwnProperty('_embedded')) {
         return data._embedded.estacionDTOList;
     } else {
-        throw new Error('Error: no stations found in the response.');
+        throw new Error('Error: no se encontraron estaciones en la respuesta.');
     }
 };
 

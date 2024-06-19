@@ -1,8 +1,8 @@
 // src/api/PeticionEstaciones.js
 
-export const fetchEstaciones = async (jwtToken, nombre, codPostal, numPuestos) => {
+export const fetchEstaciones = async (jwtToken, nombre, codPostal, numPuestos, page, size) => {
     try {
-        const response = await fetch(`http://localhost:8090/estaciones/listado?nombre=${nombre}&codPostal=${codPostal}&numPuestos=${numPuestos}&page=0&size=-1`, {
+        const response = await fetch(`http://localhost:8090/estaciones/listado?nombre=${nombre}&codPostal=${codPostal}&numPuestos=${numPuestos}&page=${page}&size=${size}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${jwtToken}`

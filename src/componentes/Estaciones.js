@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Pagination } from 'react-bootstrap';
 import { BsPlusCircleFill } from 'react-icons/bs';
 import { FaCircleLeft } from "react-icons/fa6";
 import '../styles/Estaciones.css';
@@ -60,9 +60,11 @@ const Estaciones = () => {
     const [addModelo, setAddModelo] = useState('');
     const [showAlquilerDialog, setShowAlquilerDialog] = useState(false);
     const [showReservaDialog, setShowReservaDialog] = useState(false);
-    const [showBajaBiciDialog, setShowBajaBiciDialog] = useState(false); 
-    const [motivo, setMotivo] = useState(''); 
-    const [showConfirmBiciDialog, setShowConfirmBiciDialog] = useState(false); 
+    const [showBajaBiciDialog, setShowBajaBiciDialog] = useState(false);
+    const [motivo, setMotivo] = useState('');
+    const [showConfirmBiciDialog, setShowConfirmBiciDialog] = useState(false);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [totalPages, setTotalPages] = useState(0);
 
     const userRole = sessionStorage.getItem('userRole');
     const username = sessionStorage.getItem('username');
@@ -73,10 +75,11 @@ const Estaciones = () => {
         const numP = numPuestos;
 
         try {
-            const data = await fetchEstaciones(jwtToken, nombre, codPostal, numP);
+            const data = await fetchEstaciones(jwtToken, nombre, codPostal, numP, currentPage, 4);
             if (data.hasOwnProperty('_embedded')) {
                 const estacionesList = data._embedded.estacionDTOList;
                 setEstaciones(estacionesList);
+                setTotalPages(data.page.totalPages);  // Assuming the response has a page object with totalPages
             } else {
                 setEstaciones([]);  // Clear estaciones if no data found
                 setInfo('No se encontró nada');
@@ -87,7 +90,7 @@ const Estaciones = () => {
             setError('Error al obtener las estaciones');
             setShowErrorDialog(true);
         }
-    }, [buscarTermino, numPuestos]);
+    }, [buscarTermino, numPuestos, currentPage]);
 
     const parseSearchTerm = (term) => {
         const regex = /(\d{5})|([^,\d]+)/g;
@@ -111,10 +114,11 @@ const Estaciones = () => {
             if (buscarTermino === '' && numPuestos === '') {
                 const jwtToken = sessionStorage.getItem('jwtToken');
                 try {
-                    const data = await fetchEstaciones(jwtToken, '', '', '');
+                    const data = await fetchEstaciones(jwtToken, '', '', '', currentPage, 4);
                     if (data.hasOwnProperty('_embedded')) {
                         const estacionesList = data._embedded.estacionDTOList;
                         setEstaciones(estacionesList);
+                        setTotalPages(data.page.totalPages);  // Assuming the response has a page object with totalPages
                     } else {
                         setEstaciones([]);  // Clear estaciones if no data found
                         setInfo('No se encontró nada');
@@ -131,7 +135,11 @@ const Estaciones = () => {
         };
 
         initialFetch();
-    }, [buscarTermino, numPuestos, fetchEstacionesCallback]);
+    }, [buscarTermino, numPuestos, currentPage, fetchEstacionesCallback]);
+
+    const handlePageChange = (newPage) => {
+        setCurrentPage(newPage);
+    };
 
     const handleModificar = (id) => {
         const estacion = estaciones.find(estacion => estacion.id === id);
@@ -492,9 +500,18 @@ const Estaciones = () => {
                         confirmEliminar={confirmEliminar}
                         verBicicletasEstacion={verBicicletasEstacion}
                     />
+                    <Pagination>
+                        <Pagination.Prev onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 0} />
+                        {Array.from({ length: totalPages }).map((_, index) => (
+                            <Pagination.Item key={index} active={index === currentPage} onClick={() => handlePageChange(index)}>
+                                {index + 1}
+                            </Pagination.Item>
+                        ))}
+                        <Pagination.Next onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages - 1} />
+                    </Pagination>
                 </>
             )}
-
+    
             <ErrorModal
                 show={showErrorDialog}
                 onClose={() => setShowErrorDialog(false)}

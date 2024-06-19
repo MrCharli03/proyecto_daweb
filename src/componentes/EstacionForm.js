@@ -53,7 +53,7 @@ const EstacionForm = ({
                 Cancelar
             </Button>
             <Button className='custom-button' onClick={onSubmit}>
-                {submitText} {isEdit ? <BsFillPencilFill /> : <BsPlusCircleFill />}
+                 {isEdit ? <BsFillPencilFill /> : <BsPlusCircleFill />} <span style={{ marginLeft: '5px' }}> {submitText} </span>
             </Button>
         </Modal.Footer>
     </Modal>

@@ -13,7 +13,7 @@ import EstacionForm from './EstacionForm';
 import BiciTable from './BiciTable';
 import SearchBar from './SearchBar';
 import AddBiciModal from './AddBiciModal';
-import EstacionTable from './EstacionTable';
+import EstacionTable from './EstacionCards';
 import BajaBiciModal from './BajaBiciModal'; 
 import ConfirmBiciModal from './ConfirmBiciModal'; 
 import {
@@ -52,6 +52,7 @@ const Estaciones = () => {
     const [bicicletasEstacion, setBicicletasEstacion] = useState([]);
     const [estacionVerBicis, setEstacionVerBicis] = useState(null);
     const [buscarTermino, setBuscarTermino] = useState('');
+    const [numPuestos, setNumPuestos] = useState('');
     const [selectedBiciId, setSelectedBiciId] = useState(null);
     const [estacionActual, setEstacionActual] = useState(null);
     const [nombreActual, setNombreActual] = useState(null);
@@ -68,9 +69,16 @@ const Estaciones = () => {
 
     const fetchEstacionesCallback = useCallback(async () => {
         const jwtToken = sessionStorage.getItem('jwtToken');
-        const [nombre, codPostal, numPuestos] = parseSearchTerm(buscarTermino);
+        const [nombre, codPostal] = parseSearchTerm(buscarTermino);
+        const numP = numPuestos;  // Suponiendo que 'numPuestosInput' es la variable de estado para el campo separado de número de puestos
+    
+        // Solo iniciar búsqueda si el término de búsqueda parece completo
+        if (!nombre && !codPostal && !numPuestos) {
+            return;
+        }
+    
         try {
-            const data = await fetchEstaciones(jwtToken, nombre, codPostal, numPuestos);
+            const data = await fetchEstaciones(jwtToken, nombre, codPostal, numP);
             if (data.hasOwnProperty('_embedded')) {
                 const estacionesList = data._embedded.estacionDTOList;
                 setEstaciones(estacionesList);
@@ -83,27 +91,24 @@ const Estaciones = () => {
             setError('Error al obtener las estaciones');
             setShowErrorDialog(true);
         }
-    }, [buscarTermino]);
-
+    }, [buscarTermino, numPuestos]);
+    
     const parseSearchTerm = (term) => {
-        const regex = /(\d+)|([^,\d]+)/g;
+        const regex = /(\d{5})|([^,\d]+)/g;  // Ajuste de regex para solo capturar códigos postales y texto
         const matches = term.match(regex);
         let nombre = '';
         let codPostal = '';
-        let numPuestos = '';
+    
         matches?.forEach(match => {
-            if (/^\d+$/.test(match)) {
-                if (!numPuestos) {
-                    numPuestos = match;
-                } else {
-                    codPostal = match;
-                }
-            } else {
+            if (/^\d{5}$/.test(match)) { 
+                codPostal = match;
+            } else if (match.trim().length > 0) {
                 nombre = match.trim();
             }
         });
-        return [nombre, codPostal, numPuestos];
-    };
+    
+        return [nombre, codPostal];
+    };         
 
     useEffect(() => {
         fetchEstacionesCallback();
@@ -439,7 +444,7 @@ const Estaciones = () => {
                         <Button onClick={volverAEstaciones} variant='secondary' style={{ marginRight: '10px' }}><FaCircleLeft /> Volver</Button>
                         {userRole === 'Gestor' && (
                             <Button className='custom-button' onClick={handleAddBici}>
-                                <BsPlusCircleFill /> Agregar Bici
+                                <BsPlusCircleFill /> <span style={{ marginLeft: '5px' }}>Agregar Bici</span>
                             </Button>
                         )}
                     </div>
@@ -451,6 +456,8 @@ const Estaciones = () => {
                     <SearchBar
                         buscarTermino={buscarTermino}
                         setBuscarTermino={setBuscarTermino}
+                        numPuestos={numPuestos}
+                        setNumPuestos={setNumPuestos}
                         fetchEstaciones={fetchEstacionesCallback}
                         limpiarBusqueda={limpiarBusqueda}
                         userRole={userRole}

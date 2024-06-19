@@ -139,7 +139,7 @@ const Login = () => {
                                 <span className="line flex-grow-1"></span>
                             </div>
                             <Button variant="dark" onClick={handleGitHubLogin} className="github-button">
-                                <FaGithub /> Iniciar sesión with GitHub
+                                <FaGithub /> Iniciar sesión con GitHub
                             </Button>
                             <Button variant="link" onClick={handleRegisterClick}>
                                 ¿No tienes una cuenta? Regístrate

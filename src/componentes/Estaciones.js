@@ -4,18 +4,18 @@ import { BsPlusCircleFill } from 'react-icons/bs';
 import { FaCircleLeft } from "react-icons/fa6";
 import '../styles/Estaciones.css';
 import '../styles/Registro.css';
-import ErrorModal from '../components/ErrorModal';
-import ConfirmModal from '../components/ConfirmModal';
-import InfoModal from '../components/InfoModal';
-import AlquilerModal from '../components/AlquilerModal';
-import ReservaModal from '../components/ReservaModal';
-import EstacionForm from '../components/EstacionForm';
-import BiciTable from '../components/BiciTable';
-import SearchBar from '../components/SearchBar';
-import AddBiciModal from '../components/AddBiciModal';
-import EstacionTable from '../components/EstacionTable';
-import BajaBiciModal from '../components/BajaBiciModal'; 
-import ConfirmBiciModal from '../components/ConfirmBiciModal'; // Import the new modal
+import ErrorModal from './ErrorModal';
+import ConfirmModal from './ConfirmModal';
+import InfoModal from './InfoModal';
+import AlquilerModal from './AlquilerModal';
+import ReservaModal from './ReservaModal';
+import EstacionForm from './EstacionForm';
+import BiciTable from './BiciTable';
+import SearchBar from './SearchBar';
+import AddBiciModal from './AddBiciModal';
+import EstacionTable from './EstacionTable';
+import BajaBiciModal from './BajaBiciModal'; 
+import ConfirmBiciModal from './ConfirmBiciModal'; // Import the new modal
 import {
     fetchEstaciones,
     modificarEstacion,

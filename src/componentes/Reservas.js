@@ -162,6 +162,7 @@ const Reservas = () => {
                 {sortedReservas.length === 0 ? (
                     <div style={{ textAlign: 'center', fontSize: '24px', fontWeight: 'bold', color: 'white' }}>
                         No hay reservas realizadas
+                        
                     </div>
                 ) : (
                     <Table striped bordered hover variant="dark" className="table-responsive w-100 table-container">

@@ -15,7 +15,7 @@ import SearchBar from './SearchBar';
 import AddBiciModal from './AddBiciModal';
 import EstacionTable from './EstacionTable';
 import BajaBiciModal from './BajaBiciModal'; 
-import ConfirmBiciModal from './ConfirmBiciModal'; // Import the new modal
+import ConfirmBiciModal from './ConfirmBiciModal'; 
 import {
     fetchEstaciones,
     modificarEstacion,
@@ -51,9 +51,7 @@ const Estaciones = () => {
     const [addLng, setAddLng] = useState('');
     const [bicicletasEstacion, setBicicletasEstacion] = useState([]);
     const [estacionVerBicis, setEstacionVerBicis] = useState(null);
-    const [buscarNombre, setBuscarNombre] = useState('');
-    const [buscarCodPostal, setBuscarCodPostal] = useState('');
-    const [buscarNumPuestos, setBuscarNumPuestos] = useState('');
+    const [buscarTermino, setBuscarTermino] = useState('');
     const [selectedBiciId, setSelectedBiciId] = useState(null);
     const [estacionActual, setEstacionActual] = useState(null);
     const [nombreActual, setNombreActual] = useState(null);
@@ -63,15 +61,16 @@ const Estaciones = () => {
     const [showReservaDialog, setShowReservaDialog] = useState(false);
     const [showBajaBiciDialog, setShowBajaBiciDialog] = useState(false); 
     const [motivo, setMotivo] = useState(''); 
-    const [showConfirmBiciDialog, setShowConfirmBiciDialog] = useState(false); // Add this state for confirm bici dialog
+    const [showConfirmBiciDialog, setShowConfirmBiciDialog] = useState(false); 
 
     const userRole = sessionStorage.getItem('userRole');
     const username = sessionStorage.getItem('username');
 
     const fetchEstacionesCallback = useCallback(async () => {
         const jwtToken = sessionStorage.getItem('jwtToken');
+        const [nombre, codPostal, numPuestos] = parseSearchTerm(buscarTermino);
         try {
-            const data = await fetchEstaciones(jwtToken, buscarNombre, buscarCodPostal, buscarNumPuestos);
+            const data = await fetchEstaciones(jwtToken, nombre, codPostal, numPuestos);
             if (data.hasOwnProperty('_embedded')) {
                 const estacionesList = data._embedded.estacionDTOList;
                 setEstaciones(estacionesList);
@@ -84,7 +83,27 @@ const Estaciones = () => {
             setError('Error al obtener las estaciones');
             setShowErrorDialog(true);
         }
-    }, [buscarCodPostal, buscarNombre, buscarNumPuestos]);
+    }, [buscarTermino]);
+
+    const parseSearchTerm = (term) => {
+        const regex = /(\d+)|([^,\d]+)/g;
+        const matches = term.match(regex);
+        let nombre = '';
+        let codPostal = '';
+        let numPuestos = '';
+        matches?.forEach(match => {
+            if (/^\d+$/.test(match)) {
+                if (!numPuestos) {
+                    numPuestos = match;
+                } else {
+                    codPostal = match;
+                }
+            } else {
+                nombre = match.trim();
+            }
+        });
+        return [nombre, codPostal, numPuestos];
+    };
 
     useEffect(() => {
         fetchEstacionesCallback();
@@ -237,9 +256,6 @@ const Estaciones = () => {
                 setEstacionVerBicis(nombre);
             } else {
                 setEstacionVerBicis(nombre);
-                setInfo('Esta estación no tiene bicis');
-                setInfoTitle('Atención');
-                setShowInfoDialog(true);
             }
         } catch (error) {
             setError('Error al intentar mostrar las bicis');
@@ -252,9 +268,7 @@ const Estaciones = () => {
     };
 
     const limpiarBusqueda = async () => {
-        setBuscarNombre('');
-        setBuscarCodPostal('');
-        setBuscarNumPuestos('');
+        setBuscarTermino('');
 
         const jwtToken = sessionStorage.getItem('jwtToken');
 
@@ -435,17 +449,14 @@ const Estaciones = () => {
                     <h2>Estaciones</h2>
                     <br />
                     <SearchBar
-                        buscarNombre={buscarNombre}
-                        setBuscarNombre={setBuscarNombre}
-                        buscarCodPostal={buscarCodPostal}
-                        setBuscarCodPostal={setBuscarCodPostal}
-                        buscarNumPuestos={buscarNumPuestos}
-                        setBuscarNumPuestos={setBuscarNumPuestos}
+                        buscarTermino={buscarTermino}
+                        setBuscarTermino={setBuscarTermino}
                         fetchEstaciones={fetchEstacionesCallback}
                         limpiarBusqueda={limpiarBusqueda}
                         userRole={userRole}
                         handleAddEstacion={handleAddEstacion}
                     />
+                    <br />
                     <EstacionTable
                         estaciones={estaciones}
                         userRole={userRole}

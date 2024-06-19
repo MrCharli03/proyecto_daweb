@@ -3,51 +3,29 @@ import { InputGroup, Form, Button } from 'react-bootstrap';
 import { FaSearch } from 'react-icons/fa';
 import { MdCleaningServices } from 'react-icons/md';
 import { BsPlusCircleFill } from 'react-icons/bs';
+import '../styles/SearchBar.css';
 
-const SearchBar = ({ buscarNombre, setBuscarNombre, buscarCodPostal, setBuscarCodPostal, buscarNumPuestos, setBuscarNumPuestos, fetchEstaciones, limpiarBusqueda, userRole, handleAddEstacion }) => (
-    <InputGroup>
-        <Button variant='dark' style={{ marginLeft: '8%', alignSelf: 'flex-start' }} onClick={() => fetchEstaciones()}><FaSearch /></Button>
-        <Form.Group>
+const SearchBar = ({ buscarTermino, setBuscarTermino, fetchEstaciones, limpiarBusqueda, userRole, handleAddEstacion }) => (
+    <div style={{ display: 'flex', alignItems: 'center', width: '100%', marginBottom: '1%' }}>
+        <InputGroup style={{ flex: '1', marginRight: '1%' }}>
+            <Button variant='dark' onClick={() => fetchEstaciones()}><FaSearch /></Button>
             <Form.Control
-                placeholder="Nombre"
+                placeholder="Buscar por nombre, código postal o nº de puestos"
                 type="text"
-                value={buscarNombre}
-                onChange={(e) => setBuscarNombre(e.target.value)}
-                style={{ textAlign: 'left', marginBottom: '1%', alignSelf: 'flex-start', width: '300px', borderRadius: '0' }}
+                value={buscarTermino}
+                onChange={(e) => setBuscarTermino(e.target.value)}
+                style={{ textAlign: 'left', borderRadius: '0', flexGrow: '1' }}
             />
-        </Form.Group>
-        <Form.Group>
-            <Form.Control
-                placeholder="Código Postal"
-                type="text"
-                value={buscarCodPostal}
-                onChange={(e) => setBuscarCodPostal(e.target.value)}
-                style={{ textAlign: 'left', marginBottom: '1%', alignSelf: 'flex-start', width: '150px', borderRadius: '0' }}
-            />
-        </Form.Group>
-        <Form.Group>
-            <Form.Control
-                placeholder="Número de puestos"
-                type="number"
-                className='no-spinner'
-                value={buscarNumPuestos}
-                onChange={(e) => setBuscarNumPuestos(e.target.value)}
-                style={{ textAlign: 'left', marginBottom: '1%', alignSelf: 'flex-start', width: '170px', borderTopLeftRadius: '0', borderBottomLeftRadius: '0' }}
-            />
-        </Form.Group>
-        <div style={{ textAlign: 'left', marginBottom: '1%', marginLeft: '1%', alignSelf: 'flex-start' }}>
-            <Button variant='info' onClick={limpiarBusqueda}>
-                <MdCleaningServices /> Limpiar busqueda
-            </Button>
-        </div>
+        </InputGroup>
+        <Button variant='info' onClick={limpiarBusqueda} style={{ marginRight: '1%' }} className="clear-button">
+            <MdCleaningServices /> <span>Limpiar búsqueda</span>
+        </Button>
         {userRole === 'Gestor' && (
-            <div style={{ textAlign: 'left', marginBottom: '1%', marginLeft: '1%', alignSelf: 'flex-start' }}>
-                <Button className='custom-button' onClick={handleAddEstacion}>
-                    <BsPlusCircleFill /> Agregar Estación
-                </Button>
-            </div>
+            <Button className='custom-button' onClick={handleAddEstacion}>
+                <BsPlusCircleFill /> <span style={{ marginLeft: '5px' }}>Agregar Estación</span>
+            </Button>
         )}
-    </InputGroup>
+    </div>
 );
 
 export default SearchBar;

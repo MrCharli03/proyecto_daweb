@@ -22,7 +22,7 @@ const SearchBar = ({ buscarTermino, setBuscarTermino, numPuestos, setNumPuestos,
                 min="1"
                 value={numPuestos}
                 onChange={(e) => setNumPuestos(e.target.value)}
-                style={{ maxWidth: '100px' }}
+                style={{ maxWidth: '150px' }}
             />
         </InputGroup>
         <Button variant='info' onClick={limpiarBusqueda} style={{ marginRight: '1%' }} className="clear-button">

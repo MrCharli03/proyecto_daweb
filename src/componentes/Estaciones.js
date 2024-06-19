@@ -500,6 +500,7 @@ const Estaciones = () => {
                         confirmEliminar={confirmEliminar}
                         verBicicletasEstacion={verBicicletasEstacion}
                     />
+                    <br />
                     <Pagination>
                         <Pagination.Prev onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 0} />
                         {Array.from({ length: totalPages }).map((_, index) => (

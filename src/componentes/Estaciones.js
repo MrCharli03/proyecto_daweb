@@ -274,6 +274,7 @@ const Estaciones = () => {
 
     const limpiarBusqueda = async () => {
         setBuscarTermino('');
+        setNumPuestos('');
 
         const jwtToken = sessionStorage.getItem('jwtToken');
 

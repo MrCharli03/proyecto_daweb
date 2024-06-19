@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, Form, Button } from 'react-bootstrap';
-import { BsPlusCircleFill } from 'react-icons/bs';
+import { BiSolidDislike } from 'react-icons/bi';
 
 const BajaBiciModal = ({ show, onHide, motivo, setMotivo, mostrarConfirmBajaBici }) => {
     return (
@@ -25,8 +25,8 @@ const BajaBiciModal = ({ show, onHide, motivo, setMotivo, mostrarConfirmBajaBici
                 <Button variant="secondary" onClick={onHide}>
                     Cancelar
                 </Button>
-                <Button className='custom-button' onClick={mostrarConfirmBajaBici}>
-                    Dar de Baja <BsPlusCircleFill />
+                <Button variant="danger" onClick={mostrarConfirmBajaBici}>
+                    <BiSolidDislike /> <span style={{ marginLeft: '5px' }}>Dar de baja bici</span>
                 </Button>
             </Modal.Footer>
         </Modal>

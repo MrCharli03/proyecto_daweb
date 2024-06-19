@@ -1,19 +1,28 @@
 /* Default styles for buttons */
-.clear-button, .custom-button {
+.clear-button, .custom-button1 {
     display: flex;
     align-items: center;
     height: 38px; /* Ajusta esta altura según sea necesario */
 }
 
+.custom-button1 {
+    background-color: var(--olive);
+    color: white;
+    border: none;
+    padding: 0 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
 /* Media query for small screens */
 @media (max-width: 576px) {
     .clear-button span,
-    .custom-button span {
+    .custom-button1 span {
         display: none;
     }
 
     .clear-button svg,
-    .custom-button svg {
+    .custom-button1 svg {
         margin-right: 0;
     }
 }

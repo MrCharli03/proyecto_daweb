@@ -70,19 +70,15 @@ const Estaciones = () => {
     const fetchEstacionesCallback = useCallback(async () => {
         const jwtToken = sessionStorage.getItem('jwtToken');
         const [nombre, codPostal] = parseSearchTerm(buscarTermino);
-        const numP = numPuestos;  // Suponiendo que 'numPuestosInput' es la variable de estado para el campo separado de número de puestos
-    
-        // Solo iniciar búsqueda si el término de búsqueda parece completo
-        if (!nombre && !codPostal && !numPuestos) {
-            return;
-        }
-    
+        const numP = numPuestos;
+
         try {
             const data = await fetchEstaciones(jwtToken, nombre, codPostal, numP);
             if (data.hasOwnProperty('_embedded')) {
                 const estacionesList = data._embedded.estacionDTOList;
                 setEstaciones(estacionesList);
             } else {
+                setEstaciones([]);  // Clear estaciones if no data found
                 setInfo('No se encontró nada');
                 setInfoTitle('Búsqueda');
                 setShowInfoDialog(true);
@@ -92,13 +88,13 @@ const Estaciones = () => {
             setShowErrorDialog(true);
         }
     }, [buscarTermino, numPuestos]);
-    
+
     const parseSearchTerm = (term) => {
-        const regex = /(\d{5})|([^,\d]+)/g;  // Ajuste de regex para solo capturar códigos postales y texto
+        const regex = /(\d{5})|([^,\d]+)/g;
         const matches = term.match(regex);
         let nombre = '';
         let codPostal = '';
-    
+
         matches?.forEach(match => {
             if (/^\d{5}$/.test(match)) { 
                 codPostal = match;
@@ -106,13 +102,36 @@ const Estaciones = () => {
                 nombre = match.trim();
             }
         });
-    
+
         return [nombre, codPostal];
-    };         
+    };
 
     useEffect(() => {
-        fetchEstacionesCallback();
-    }, [fetchEstacionesCallback]);
+        const initialFetch = async () => {
+            if (buscarTermino === '' && numPuestos === '') {
+                const jwtToken = sessionStorage.getItem('jwtToken');
+                try {
+                    const data = await fetchEstaciones(jwtToken, '', '', '');
+                    if (data.hasOwnProperty('_embedded')) {
+                        const estacionesList = data._embedded.estacionDTOList;
+                        setEstaciones(estacionesList);
+                    } else {
+                        setEstaciones([]);  // Clear estaciones if no data found
+                        setInfo('No se encontró nada');
+                        setInfoTitle('Búsqueda');
+                        setShowInfoDialog(true);
+                    }
+                } catch (error) {
+                    setError('Error al obtener las estaciones');
+                    setShowErrorDialog(true);
+                }
+            } else {
+                fetchEstacionesCallback();
+            }
+        };
+
+        initialFetch();
+    }, [buscarTermino, numPuestos, fetchEstacionesCallback]);
 
     const handleModificar = (id) => {
         const estacion = estaciones.find(estacion => estacion.id === id);
@@ -284,6 +303,7 @@ const Estaciones = () => {
                 const estacionesList = data._embedded.estacionDTOList;
                 setEstaciones(estacionesList);
             } else {
+                setEstaciones([]);  // Clear estaciones if no data found
                 setInfo('No se encontró nada');
                 setInfoTitle('Búsqueda');
                 setShowInfoDialog(true);

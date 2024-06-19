@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Table, Container, Button, Modal } from 'react-bootstrap';
+import { Container, Card, Button, Row, Col } from 'react-bootstrap';
 import { FaKey } from "react-icons/fa";
 import { fetchReservas, fetchBicis } from '../api/PeticionReservas';
+import AlquilerModal from './AlquilerModal';
+import InfoModal from './InfoModal';
+import ErrorModal from './ErrorModal';
 
 const Reservas = () => {
     const [reservas, setReservas] = useState([]);
@@ -10,6 +13,7 @@ const Reservas = () => {
     const [showErrorDialog, setShowErrorDialog] = useState(false);
     const [showInfoDialog, setShowInfoDialog] = useState(false);
     const [showAlquilerDialog, setShowAlquilerDialog] = useState(false);
+    const [selectedReserva, setSelectedReserva] = useState(null);
 
     const username = sessionStorage.getItem('username');
 
@@ -64,7 +68,8 @@ const Reservas = () => {
         return `${horas}:${minutos} ${dia}/${mes}/${año}`;
     };
 
-    const handleAlquiler = () => {
+    const handleAlquiler = (reserva) => {
+        setSelectedReserva(reserva);
         setShowAlquilerDialog(true);
     };
 
@@ -78,6 +83,7 @@ const Reservas = () => {
                     'Authorization': `Bearer ${jwtToken}`,
                     'Content-Type': 'application/json'
                 },
+                body: JSON.stringify({ idReserva: selectedReserva.id })
             });
 
             if (!response.ok) {
@@ -85,71 +91,16 @@ const Reservas = () => {
                 setShowErrorDialog(true);
                 setShowAlquilerDialog(false);
             } else {
-                console.log('La alquiler se realizó correctamente');
+                console.log('El alquiler se realizó correctamente');
                 setShowAlquilerDialog(false);
                 fetchReservasData();
             }
 
         } catch (error) {
-            console.error('Error al crear la bici:', error);
+            console.error('Error al alquilar la bici:', error);
             setError('Error interno');
             setShowErrorDialog(true);
         }
-    };
-
-    const ErrorModal = ({ show, onClose, errorMessage }) => {
-        return (
-            <Modal show={show} onHide={onClose} centered backdrop="static" size="sm">
-                <Modal.Header className="bg-danger text-white justify-content-center">
-                    <Modal.Title style={{ fontWeight: 'bold' }}>Error</Modal.Title>
-                </Modal.Header>
-                <Modal.Body className="bg-danger text-white" style={{ textAlign: 'center' }}>{errorMessage}</Modal.Body>
-                <Modal.Footer className="bg-danger text-white justify-content-center">
-                    <Button variant="dark" onClick={onClose}>
-                        OK
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-        );
-    };
-
-    const InfoModal = ({ show, onClose }) => {
-        return (
-            <Modal show={show} onHide={onClose} centered backdrop="static" size="sm">
-                <Modal.Header className='bg-info justify-content-center'>
-                    <Modal.Title style={{ fontWeight: 'bold' }}>Atención</Modal.Title>
-                </Modal.Header>
-                <Modal.Body className='bg-info' style={{ textAlign: 'center' }}>
-                    No tienes ni reservas ni alquileres
-                </Modal.Body>
-                <Modal.Footer className='bg-info justify-content-center'>
-                    <Button variant="dark" onClick={onClose}>
-                        OK
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-        );
-    };
-
-    const AlquilerModal = ({ show, onClose, onConfirm, message }) => {
-        return (
-            <Modal show={show} onHide={onClose} centered backdrop="static" size="sm">
-                <Modal.Header className='bg-info justify-content-center'>
-                    <Modal.Title style={{ fontWeight: 'bold' }}>Alquilar</Modal.Title>
-                </Modal.Header>
-                <Modal.Body className='bg-info' style={{ textAlign: 'center' }}>
-                    {message}
-                </Modal.Body>
-                <Modal.Footer className='bg-info justify-content-center'>
-                    <Button variant="secondary" onClick={onClose}>
-                        Cancelar
-                    </Button>
-                    <Button variant="dark" onClick={onConfirm}>
-                        Alquilar <FaKey />
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-        );
     };
 
     const sortedReservas = reservas.slice().sort((a, b) => new Date(b.creada) - new Date(a.creada));
@@ -158,41 +109,39 @@ const Reservas = () => {
         <div className="tab-contenedor">
             <h2>Reservas</h2>
             <br />
-            <Container fluid className="table-container" style={{ maxHeight: '450px', overflowY: 'auto', width: '100%', padding: '0' }}>
+            <Container fluid className="card-container">
                 {sortedReservas.length === 0 ? (
                     <div style={{ textAlign: 'center', fontSize: '24px', fontWeight: 'bold', color: 'white' }}>
                         No hay reservas realizadas
-                        
                     </div>
                 ) : (
-                    <Table striped bordered hover variant="dark" className="table-responsive w-100 table-container">
-                        <thead className='sticky-header'>
-                            <tr>
-                                <th>Bici</th>
-                                <th>Fecha de Reserva</th>
-                                <th>Fecha de Caducidad</th>
-                                <th>Estado</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {sortedReservas.map(reserva => (
-                                <tr key={reserva.id}>
-                                    <td>{getBiciNombre(reserva.idBicicleta)}</td>
-                                    <td>{formatFechaHora(reserva.creada)}</td>
-                                    <td>{formatFechaHora(reserva.caducidad)}</td>
-                                    <td className={reserva.caducada ? 'rojo' : 'blanco'}>{reserva.caducada ? 'Caducada' : 'Activa'}</td>
-                                    <td>
+                    <Row>
+                        {sortedReservas.map(reserva => (
+                            <Col key={reserva.id} md={6} lg={4} className="mb-4">
+                                <Card
+                                    style={{
+                                        backgroundColor: reserva.caducada ? 'red' : 'var(--olive)',
+                                        color: 'white'
+                                    }}
+                                    className="h-100"
+                                >
+                                    <Card.Body>
+                                        <Card.Title>{getBiciNombre(reserva.idBicicleta)}</Card.Title>
+                                        <Card.Text>
+                                            <strong>Fecha de Reserva:</strong> {formatFechaHora(reserva.creada)}<br />
+                                            <strong>Fecha de Caducidad:</strong> {formatFechaHora(reserva.caducidad)}<br />
+                                            <strong>Estado:</strong> {reserva.caducada ? 'Caducada' : 'Activa'}
+                                        </Card.Text>
                                         {!reserva.caducada && (
-                                            <Button className='custom-button' style={{ marginRight: '10px', borderRadius: '50%' }} title="Alquilar" onClick={() => handleAlquiler()}>
-                                                <FaKey />
+                                            <Button variant="primary" onClick={() => handleAlquiler(reserva)}>
+                                                <FaKey /> Alquilar
                                             </Button>
                                         )}
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </Table>
+                                    </Card.Body>
+                                </Card>
+                            </Col>
+                        ))}
+                    </Row>
                 )}
             </Container>
             <ErrorModal

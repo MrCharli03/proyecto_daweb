@@ -5,10 +5,10 @@ import { FaTrash } from 'react-icons/fa';
 import { MdDirectionsBike } from 'react-icons/md';
 
 const EstacionCard = ({ estaciones, userRole, handleModificar, confirmEliminar, verBicicletasEstacion }) => (
-    <Container fluid className="card-container" style={{ width: '100%' }}>
+    <Container fluid className="card-container">
         <Row>
             {estaciones.map(estacion => (
-                <Col key={estacion.id} xs={12} sm={6} md={4} lg={3} className="mb-3">
+                <Col key={estacion.id} md={6} lg={4} className="mb-4">
                     <Card bg="dark" text="white" className="h-100">
                         <Card.Body>
                             <Card.Title>{estacion.nombre}</Card.Title>

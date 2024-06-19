@@ -75,7 +75,7 @@ const Estaciones = () => {
         const numP = numPuestos;
 
         try {
-            const data = await fetchEstaciones(jwtToken, nombre, codPostal, numP, currentPage, 4);
+            const data = await fetchEstaciones(jwtToken, nombre, codPostal, numP, currentPage, 6);
             if (data.hasOwnProperty('_embedded')) {
                 const estacionesList = data._embedded.estacionDTOList;
                 setEstaciones(estacionesList);
@@ -114,7 +114,7 @@ const Estaciones = () => {
             if (buscarTermino === '' && numPuestos === '') {
                 const jwtToken = sessionStorage.getItem('jwtToken');
                 try {
-                    const data = await fetchEstaciones(jwtToken, '', '', '', currentPage, 4);
+                    const data = await fetchEstaciones(jwtToken, '', '', '', currentPage, 6);
                     if (data.hasOwnProperty('_embedded')) {
                         const estacionesList = data._embedded.estacionDTOList;
                         setEstaciones(estacionesList);

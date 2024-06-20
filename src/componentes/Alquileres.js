@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Container, Button, Card, Row, Col } from 'react-bootstrap';
 import { FaParking } from "react-icons/fa";
 import { fetchReservas, fetchEstaciones, fetchBici, aparcarBici } from '../api/PeticionAlquileres';
-import InfoModal from './InfoModal';
 import ErrorModal from './ErrorModal';
 import AparcarModal from './AparcarModal';
 
@@ -11,7 +10,6 @@ const Alquileres = () => {
     const [bicis, setBicis] = useState([]);
     const [error, setError] = useState(null);
     const [showErrorDialog, setShowErrorDialog] = useState(false);
-    const [showInfoDialog, setShowInfoDialog] = useState(false);
     const [showAparcarDialog, setShowAparcarDialog] = useState(false);
     const [selectedEstacionId, setSelectedEstacionId] = useState(null);
     const [estaciones, setEstaciones] = useState([]);
@@ -25,7 +23,8 @@ const Alquileres = () => {
             const data = await fetchReservas(username, jwtToken);
 
             if (data.error) {
-                setShowInfoDialog(true);
+                setError('Error al obtener los alquileres');
+                setAlquileres([]);
             } else {
                 setAlquileres(data.alquileres);
             }
@@ -160,10 +159,6 @@ const Alquileres = () => {
                 show={showErrorDialog}
                 onClose={() => setShowErrorDialog(false)}
                 errorMessage={error}
-            />
-            <InfoModal
-                show={showInfoDialog}
-                onClose={() => setShowInfoDialog(false)}
             />
             <AparcarModal
                 show={showAparcarDialog}

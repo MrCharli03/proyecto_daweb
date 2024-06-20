@@ -3,7 +3,6 @@ import { Container, Card, Button, Row, Col } from 'react-bootstrap';
 import { FaKey } from "react-icons/fa";
 import { fetchReservas, fetchBicis } from '../api/PeticionReservas';
 import AlquilerModal from './AlquilerModal';
-import InfoModal from './InfoModal';
 import ErrorModal from './ErrorModal';
 
 const Reservas = () => {
@@ -11,7 +10,6 @@ const Reservas = () => {
     const [bicis, setBicis] = useState([]);
     const [error, setError] = useState(null);
     const [showErrorDialog, setShowErrorDialog] = useState(false);
-    const [showInfoDialog, setShowInfoDialog] = useState(false);
     const [showAlquilerDialog, setShowAlquilerDialog] = useState(false);
     const [selectedReserva, setSelectedReserva] = useState(null);
 
@@ -23,7 +21,7 @@ const Reservas = () => {
         try {
             const { status, data } = await fetchReservas(username, jwtToken);
             if (status === 404) {
-                setShowInfoDialog(true);
+                setReservas([]);
             } else {
                 setReservas(data);
             }
@@ -148,10 +146,6 @@ const Reservas = () => {
                 show={showErrorDialog}
                 onClose={() => setShowErrorDialog(false)}
                 errorMessage={error}
-            />
-            <InfoModal
-                show={showInfoDialog}
-                onClose={() => setShowInfoDialog(false)}
             />
             <AlquilerModal
                 show={showAlquilerDialog}

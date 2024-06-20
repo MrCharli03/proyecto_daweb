@@ -10,7 +10,7 @@ const SearchBar = ({ buscarTermino, setBuscarTermino, numPuestos, setNumPuestos,
         <InputGroup style={{ flex: '1', marginRight: '1%' }}>
             <Button variant='dark' onClick={() => fetchEstaciones()}><FaSearch /></Button>
             <Form.Control
-                placeholder="Buscar por nombre o código postal"
+                placeholder="Buscar por nombre y/o código postal"
                 type="text"
                 value={buscarTermino}
                 onChange={(e) => setBuscarTermino(e.target.value)}

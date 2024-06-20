@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Table, Container, Button, Modal, Form } from 'react-bootstrap';
+import { Container, Button, Card, Row, Col } from 'react-bootstrap';
 import { FaParking } from "react-icons/fa";
 import { fetchReservas, fetchEstaciones, fetchBici, aparcarBici } from '../api/PeticionAlquileres';
+import InfoModal from './InfoModal';
+import ErrorModal from './ErrorModal';
+import AparcarModal from './AparcarModal';
 
 const Alquileres = () => {
     const [alquileres, setAlquileres] = useState([]);
@@ -108,104 +111,50 @@ const Alquileres = () => {
         setSelectedEstacionId(event.target.value);
     };
 
-    const ErrorModal = ({ show, onClose, errorMessage }) => {
-        return (
-            <Modal show={show} onHide={onClose} centered backdrop="static" size="sm">
-                <Modal.Header className="bg-danger text-white justify-content-center">
-                    <Modal.Title style={{ fontWeight: 'bold' }}>Error</Modal.Title>
-                </Modal.Header>
-                <Modal.Body className="bg-danger text-white" style={{ textAlign: 'center' }}>{errorMessage}</Modal.Body>
-                <Modal.Footer className="bg-danger text-white justify-content-center">
-                    <Button variant="dark" onClick={onClose}>
-                        OK
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-        );
-    };
-
-    const InfoModal = ({ show, onClose }) => {
-        return (
-            <Modal show={show} onHide={onClose} centered backdrop="static" size="sm">
-                <Modal.Header className='bg-info justify-content-center'>
-                    <Modal.Title style={{ fontWeight: 'bold' }}>Atención</Modal.Title>
-                </Modal.Header>
-                <Modal.Body className='bg-info' style={{ textAlign: 'center' }}>
-                    No tienes ni reservas ni alquileres
-                </Modal.Body>
-                <Modal.Footer className='bg-info justify-content-center'>
-                    <Button variant="dark" onClick={onClose}>
-                        OK
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-        );
-    };
-
-    const AparcarModal = ({ show, onClose, onConfirm, estaciones, selectedEstacionId, handleEstacionChange }) => {
-        return (
-            <Modal show={show} onHide={onClose} centered backdrop="static">
-                <Modal.Header className='bg-info justify-content-center'>
-                    <Modal.Title style={{ fontWeight: 'bold' }}>Aparcar</Modal.Title>
-                </Modal.Header>
-                <Modal.Body className='bg-info' style={{ textAlign: 'center' }}>
-                    Estación en la que va a aparcar
-                    <br />
-                    <br />
-                    <Form.Select aria-label="estaciones" value={selectedEstacionId} onChange={handleEstacionChange}>
-                        <option value="">Selecciona una estación</option>
-                        {estaciones.map(estacion => (
-                            <option key={estacion.id} value={estacion.id}>{estacion.nombre}</option>
-                        ))}
-                    </Form.Select>
-                </Modal.Body>
-                <Modal.Footer className='bg-info justify-content-center'>
-                    <Button variant="secondary" onClick={onClose}>
-                        Cancelar
-                    </Button>
-                    <Button variant="dark" onClick={onConfirm}>
-                        Aparcar <FaParking />
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-        );
-    };
-
     const sortedAlquileres = alquileres.slice().sort((a, b) => new Date(b.inicio) - new Date(a.inicio));
 
     return (
         <div className="tab-contenedor">
             <h2>Alquileres</h2>
             <br />
-            <Container fluid className="table-container" style={{ maxHeight: '450px', overflowY: 'auto', width: '100%', padding: '0' }}>
-                <Table striped bordered hover variant="dark" className="table-responsive w-100 table-container">
-                    <thead className='sticky-header'>
-                        <tr>
-                            <th>Bici</th>
-                            <th>Fecha de Inicio</th>
-                            <th>Fecha de Fin</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+            <Container fluid className="card-container">
+                {sortedAlquileres.length === 0 ? (
+                    <div style={{ textAlign: 'center', fontSize: '24px', fontWeight: 'bold', color: 'white' }}>
+                        No hay alquileres realizados
+                    </div>
+                ) : (
+                    <Row>
                         {sortedAlquileres.map(alquiler => (
-                            <tr key={alquiler.id}>
-                                <td>{getBiciNombre(alquiler.idBicicleta)}</td>
-                                <td>{formatFechaHora(alquiler.inicio)}</td>
-                                <td>{alquiler.fin ? formatFechaHora(alquiler.fin) : '-'}</td>
-                                <td className={alquiler.activo ? 'verde' : 'blanco'}>{alquiler.activo ? 'Activo' : 'Terminado'}</td>
-                                <td>
-                                    {alquiler.activo && (
-                                        <Button className='custom-button' style={{ marginRight: '10px', borderRadius: '50%' }} title="Aparcar bici" onClick={handleAparcar}>
-                                            <FaParking size={25} />
-                                        </Button>
-                                    )}
-                                </td>
-                            </tr>
+                            <Col key={alquiler.id} md={6} lg={4} className="mb-4">
+                                <Card
+                                    style={{
+                                        backgroundColor: alquiler.activo ? 'var(--olive)' : 'grey',
+                                        color: 'white'
+                                    }}
+                                    className="h-100"
+                                >
+                                    <Card.Body>
+                                        <Card.Title>{getBiciNombre(alquiler.idBicicleta)}</Card.Title>
+                                        <Card.Text>
+                                            <strong>Fecha de Inicio:</strong> {formatFechaHora(alquiler.inicio)}<br />
+                                            {!alquiler.activo && (
+                                                <>
+                                                    <strong>Fecha de Fin:</strong> {alquiler.fin ? formatFechaHora(alquiler.fin) : '-'}<br />
+                                                    <strong>Estado:</strong> <span className={alquiler.activo ? 'verde' : 'blanco'}>{alquiler.activo ? 'Activo' : 'Terminado'}</span>
+                                                </>
+                                            )}
+                                        </Card.Text>
+                                        {alquiler.activo && (
+                                            <Button variant="primary" onClick={handleAparcar} title="Aparcar bici">
+                                                <FaParking size={25} /> Aparcar
+                                            </Button>
+                                        )}
+                                    </Card.Body>
+                                </Card>
+                            </Col>
                         ))}
-                    </tbody>
-                </Table>
+                    </Row>
+                )}
             </Container>
             <ErrorModal
                 show={showErrorDialog}

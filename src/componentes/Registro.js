@@ -28,7 +28,7 @@ const Registro = () => {
         } else {
             try {
                 const formattedDate = birthDate ? birthDate.toISOString().split('T')[0] : '';
-
+    
                 const userData = {
                     dni: dni,
                     nombreCompleto: nombre,
@@ -38,15 +38,15 @@ const Registro = () => {
                     telefono: telefono,
                     password: password
                 };
-
-                const registerResponse = await fetch(`http://localhost:8090/usuarios/register`, {
+    
+                const registerResponse = await fetch(`http://localhost:5000/usuarios/register`, { // Cambiar a 5000
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(userData)
                 });
-
+    
                 if (registerResponse.status === 204) {
                     setExitoMessage('Registro exitoso');
                     setNombre('');
@@ -57,18 +57,16 @@ const Registro = () => {
                     setBirthDate(null);
                     setValidated(false);
                     setShowExitoDialog(true);
-                }
-                else if (registerResponse.status === 400) {
+                } else if (registerResponse.status === 400) {
                     setMessage('Error en el registro. Por favor, inténtalo de nuevo.');
                 }
-
+    
             } catch (error) {
                 setMessage('Error en la conexión o en el servidor.');
             }
-
         }
     };
-
+    
     const handleBackClick = () => {
         navigate('/');
     };

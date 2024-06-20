@@ -1,12 +1,12 @@
-# Executing the express server:
+# Getting Started with Create React App
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Executing the express server
 
 Go src and execute with this command:
 
 ### `node server.js`
-
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 

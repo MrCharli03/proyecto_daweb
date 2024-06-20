@@ -2,6 +2,8 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Make npm -i to install dependencies
+
 ## Executing the express server
 
 Go src and execute with this command:

@@ -120,7 +120,7 @@ const Reservas = () => {
                             <Col key={reserva.id} md={6} lg={4} className="mb-4">
                                 <Card
                                     style={{
-                                        backgroundColor: reserva.caducada ? 'red' : 'var(--olive)',
+                                        backgroundColor: reserva.caducada ? '#DC143C' : 'var(--olive)',
                                         color: 'white'
                                     }}
                                     className="h-100"
@@ -134,7 +134,7 @@ const Reservas = () => {
                                         </Card.Text>
                                         {!reserva.caducada && (
                                             <Button variant="primary" onClick={() => handleAlquiler(reserva)}>
-                                                <FaKey /> Alquilar
+                                                Alquilar <FaKey /> 
                                             </Button>
                                         )}
                                     </Card.Body>

@@ -10,7 +10,7 @@ import InfoModal from './InfoModal';
 import AlquilerModal from './AlquilerModal';
 import ReservaModal from './ReservaModal';
 import EstacionForm from './EstacionForm';
-import BiciTable from './BiciTable';
+import BiciTable from './BicisEstaciones';
 import SearchBar from './SearchBar';
 import AddBiciModal from './AddBiciModal';
 import EstacionTable from './EstacionCards';

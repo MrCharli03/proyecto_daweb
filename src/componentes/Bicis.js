@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Modal, Button, Table, Container } from 'react-bootstrap';
+import { Card, Container, Row, Col } from 'react-bootstrap';
+import ErrorModal from './ErrorModal';
 
 const Bicis = () => {
     const [bicicletas, setBicicletas] = useState([]);
@@ -82,62 +83,45 @@ const Bicis = () => {
         return estacion ? estacion.lng : 'Desconocido';
     };
 
-    const ErrorModal = ({ show, onClose, errorMessage }) => {
-        return (
-            <Modal show={show} onHide={onClose} centered backdrop="static" size="sm">
-                <Modal.Header className="bg-danger text-white justify-content-center">
-                    <Modal.Title style={{ fontWeight: 'bold' }}>Error</Modal.Title>
-                </Modal.Header>
-                <Modal.Body className="bg-danger text-white" style={{ textAlign: 'center' }}>{errorMessage}</Modal.Body>
-                <Modal.Footer className="bg-danger text-white justify-content-center">
-                    <Button variant="dark" onClick={onClose}>
-                        OK
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-        );
-    };
-
     return (
         <div className="tab-contenedor">
             <h2>Bicis</h2>
             <br />
-
-            <Container fluid className="table-container" style={{ maxHeight: '450px', overflowY: 'auto', width: '95%', padding: '0' }}>
-                <Table striped bordered hover variant="dark" className='table-container'>
-                    <thead className='sticky-header'>
-                        <tr>
-                            <th>Modelo</th>
-                            <th>Fecha de Alta</th>
-                            <th>Fecha de Baja</th>
-                            <th>Motivo</th>
-                            <th>Estado</th>
-                            <th>Estacion</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+            <Container fluid className="card-container">
+                {bicicletas.length === 0 ? (
+                    <div style={{ textAlign: 'center', fontSize: '24px', fontWeight: 'bold', color: 'white' }}>
+                        No hay bicicletas disponibles
+                    </div>
+                ) : (
+                    <Row>
                         {bicicletas.map(bici => (
-                            <tr key={bici.id}>
-                                <td>{bici.modelo}</td>
-                                <td>{new Date(bici.fechaAlta).toLocaleDateString()}</td>
-                                <td>{bici.fechaBaja ? new Date(bici.fechaBaja).toLocaleDateString() : '-'}</td>
-                                <td>{bici.motivo || '-'}</td>
-                                <td className={
-                                    bici.estado === 'DISPONIBLE' ? 'verde' :
-                                        bici.estado === 'RESERVADA' ? 'naranja' :
-                                            'rojo'
-                                }>{bici.estado}</td>
-                                <td>
-                                    {bici.estacionID !== null ? (
-                                        <a href={`https://www.google.es/maps?q=${getEstacionLat(bici.estacionID)},${getEstacionLng(bici.estacionID)}`} target="_blank" rel="noopener noreferrer" style={{ color: "lightblue", textDecoration: 'underline' }}>
-                                            {getEstacionNombre(bici.estacionID)}
-                                        </a>
-                                    ) : '-'}
-                                </td>
-                            </tr>
+                            <Col key={bici.id} md={6} lg={4} className="mb-4">
+                                <Card className="h-100" style={{
+                                    backgroundColor: 
+                                        bici.estado === 'DISPONIBLE' ? 'var(--olive)' :
+                                        bici.estado === 'RESERVADA' ? 'rgb(209, 82, 41)' :
+                                        '#DC143C',
+                                    color: 'white'
+                                }}>
+                                    <Card.Body>
+                                        <Card.Title>{bici.modelo}</Card.Title>
+                                        <Card.Text>
+                                            <strong>Fecha de Alta:</strong> {new Date(bici.fechaAlta).toLocaleDateString()}<br />
+                                            <strong>Fecha de Baja:</strong> {bici.fechaBaja ? new Date(bici.fechaBaja).toLocaleDateString() : '-'}<br />
+                                            <strong>Motivo:</strong> {bici.motivo || '-'}<br />
+                                            <strong>Estado:</strong> {bici.estado}<br />
+                                            <strong>Estacion:</strong> {bici.estacionID !== null ? (
+                                                <a href={`https://www.google.es/maps?q=${getEstacionLat(bici.estacionID)},${getEstacionLng(bici.estacionID)}`} target="_blank" rel="noopener noreferrer" style={{ color: "lightblue", textDecoration: 'underline' }}>
+                                                    {getEstacionNombre(bici.estacionID)}
+                                                </a>
+                                            ) : '-'}
+                                        </Card.Text>
+                                    </Card.Body>
+                                </Card>
+                            </Col>
                         ))}
-                    </tbody>
-                </Table>
+                    </Row>
+                )}
             </Container>
             <ErrorModal
                 show={showErrorDialog}

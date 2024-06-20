@@ -140,13 +140,13 @@ const Alquileres = () => {
                                             {!alquiler.activo && (
                                                 <>
                                                     <strong>Fecha de Fin:</strong> {alquiler.fin ? formatFechaHora(alquiler.fin) : '-'}<br />
-                                                    <strong>Estado:</strong> <span className={alquiler.activo ? 'verde' : 'blanco'}>{alquiler.activo ? 'Activo' : 'Terminado'}</span>
+                                                    <strong>Estado:</strong> <span className={alquiler.activo ? 'var(--olive)' : 'blanco'}>{alquiler.activo ? 'Activo' : 'Terminado'}</span>
                                                 </>
                                             )}
                                         </Card.Text>
                                         {alquiler.activo && (
                                             <Button variant="primary" onClick={handleAparcar} title="Aparcar bici">
-                                                <FaParking size={25} /> Aparcar
+                                                Aparcar <FaParking size={25} /> 
                                             </Button>
                                         )}
                                     </Card.Body>

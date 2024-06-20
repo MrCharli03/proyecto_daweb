@@ -1,0 +1,227 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 266338304 bytes for G1 virtual space
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   The process is running with CompressedOops enabled, and the Java Heap may be blocking the growth of the native heap
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+#   JVM is running with Zero Based Compressed Oops mode in which the Java heap is
+#     placed in the first 32GB address space. The Java Heap base address is the
+#     maximum limit for the native heap growth. Please use -XX:HeapBaseMinAddress
+#     to set the Java Heap base and to place the Java Heap above 32GB virtual address.
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (os_windows.cpp:3617), pid=104544, tid=55576
+#
+# JRE version:  (17.0.8.1+1) (build )
+# Java VM: OpenJDK 64-Bit Server VM (17.0.8.1+1, mixed mode, sharing, tiered, compressed oops, compressed class ptrs, g1 gc, windows-amd64)
+# No core dump will be written. Minidumps are not enabled by default on client versions of Windows
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -Dfile.encoding=UTF-8 -Dstdout.encoding=UTF-8 -Dstderr.encoding=UTF-8 -XX:+ShowCodeDetailsInExceptionMessages estaciones.EstacionesApp
+
+Host: AMD Ryzen 5 5500                               , 12 cores, 15G,  Windows 11 , 64 bit Build 22621 (10.0.22621.3235)
+Time: Fri Apr  5 10:48:45 2024 Hora de verano romance elapsed time: 0.009687 seconds (0d 0h 0m 0s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x0000010ef6d6b350):  JavaThread "Unknown thread" [_thread_in_vm, id=55576, stack(0x00000008f8900000,0x00000008f8a00000)]
+
+Stack: [0x00000008f8900000,0x00000008f8a00000]
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x678b0a]
+V  [jvm.dll+0x835e84]
+V  [jvm.dll+0x83762e]
+V  [jvm.dll+0x837c93]
+V  [jvm.dll+0x24746f]
+V  [jvm.dll+0x675859]
+V  [jvm.dll+0x66a0ea]
+V  [jvm.dll+0x306c7b]
+V  [jvm.dll+0x30e166]
+V  [jvm.dll+0x35dd3e]
+V  [jvm.dll+0x35df6f]
+V  [jvm.dll+0x2ddb48]
+V  [jvm.dll+0x2deab4]
+V  [jvm.dll+0x807f31]
+V  [jvm.dll+0x36bb21]
+V  [jvm.dll+0x7e733c]
+V  [jvm.dll+0x3ee4af]
+V  [jvm.dll+0x3f00c1]
+C  [jli.dll+0x528b]
+C  [ucrtbase.dll+0x29363]
+C  [KERNEL32.DLL+0x1257d]
+C  [ntdll.dll+0x5aa58]
+
+
+---------------  P R O C E S S  ---------------
+
+Threads class SMR info:
+_java_thread_list=0x00007ffedf72a018, length=0, elements={
+}
+
+Java Threads: ( => current thread )
+
+Other Threads:
+  0x0000010ef6dda150 GCTaskThread "GC Thread#0" [stack: 0x00000008f8a00000,0x00000008f8b00000] [id=88076]
+  0x0000010ef6deb410 ConcurrentGCThread "G1 Main Marker" [stack: 0x00000008f8b00000,0x00000008f8c00000] [id=87372]
+  0x0000010ef6debd30 ConcurrentGCThread "G1 Conc#0" [stack: 0x00000008f8c00000,0x00000008f8d00000] [id=70060]
+
+[error occurred during error reporting (printing all threads), id 0xc0000005, EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007ffedeefe587]
+
+VM state: not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0x0000010ef6d51530] Heap_lock - owner thread: 0x0000010ef6d6b350
+
+Heap address: 0x0000000703400000, size: 4044 MB, Compressed Oops mode: Zero based, Oop shift amount: 3
+
+CDS archive(s) mapped at: [0x0000000000000000-0x0000000000000000-0x0000000000000000), size 0, SharedBaseAddress: 0x0000000800000000, ArchiveRelocationMode: 1.
+Narrow klass base: 0x0000000000000000, Narrow klass shift: 0, Narrow klass range: 0x0
+
+GC Precious Log:
+<Empty>
+
+Heap:
+ garbage-first heap   total 0K, used 0K [0x0000000703400000, 0x0000000800000000)
+  region size 2048K, 0 young (0K), 0 survivors (0K)
+
+[error occurred during error reporting (printing heap information), id 0xc0000005, EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007ffedf2e2699]
+
+GC Heap History (0 events):
+No events
+
+Dll operation events (1 events):
+Event: 0.006 Loaded shared library C:\Users\ccruz\OneDrive\Escritorio\eclipse\plugins\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_17.0.8.v20230831-1047\jre\bin\java.dll
+
+Deoptimization events (0 events):
+No events
+
+Classes unloaded (0 events):
+No events
+
+Classes redefined (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+VM Operations (0 events):
+No events
+
+Events (0 events):
+No events
+
+
+Dynamic libraries:
+0x00007ff75f440000 - 0x00007ff75f44e000 	C:\Users\ccruz\OneDrive\Escritorio\eclipse\plugins\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_17.0.8.v20230831-1047\jre\bin\javaw.exe
+0x00007fff32f50000 - 0x00007fff33166000 	C:\WINDOWS\SYSTEM32\ntdll.dll
+0x00007fff31cf0000 - 0x00007fff31db4000 	C:\WINDOWS\System32\KERNEL32.DLL
+0x00007fff30630000 - 0x00007fff309d6000 	C:\WINDOWS\System32\KERNELBASE.dll
+0x00007fff30300000 - 0x00007fff30411000 	C:\WINDOWS\System32\ucrtbase.dll
+0x00007fff18300000 - 0x00007fff18319000 	C:\Users\ccruz\OneDrive\Escritorio\eclipse\plugins\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_17.0.8.v20230831-1047\jre\bin\VCRUNTIME140.dll
+0x00007fff18540000 - 0x00007fff18557000 	C:\Users\ccruz\OneDrive\Escritorio\eclipse\plugins\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_17.0.8.v20230831-1047\jre\bin\jli.dll
+0x00007fff319f0000 - 0x00007fff31b9d000 	C:\WINDOWS\System32\USER32.dll
+0x00007fff16e70000 - 0x00007fff17103000 	C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.22621.3235_none_270f74e173860f98\COMCTL32.dll
+0x00007fff302d0000 - 0x00007fff302f6000 	C:\WINDOWS\System32\win32u.dll
+0x00007fff32ad0000 - 0x00007fff32b77000 	C:\WINDOWS\System32\msvcrt.dll
+0x00007fff319c0000 - 0x00007fff319e9000 	C:\WINDOWS\System32\GDI32.dll
+0x00007fff309e0000 - 0x00007fff30af8000 	C:\WINDOWS\System32\gdi32full.dll
+0x00007fff30590000 - 0x00007fff3062a000 	C:\WINDOWS\System32\msvcp_win.dll
+0x00007fff32b80000 - 0x00007fff32bb1000 	C:\WINDOWS\System32\IMM32.DLL
+0x00007fff1bcf0000 - 0x00007fff1bcfc000 	C:\Users\ccruz\OneDrive\Escritorio\eclipse\plugins\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_17.0.8.v20230831-1047\jre\bin\vcruntime140_1.dll
+0x00007ffeef3b0000 - 0x00007ffeef441000 	C:\Users\ccruz\OneDrive\Escritorio\eclipse\plugins\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_17.0.8.v20230831-1047\jre\bin\msvcp140.dll
+0x00007ffedec10000 - 0x00007ffedf85c000 	C:\Users\ccruz\OneDrive\Escritorio\eclipse\plugins\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_17.0.8.v20230831-1047\jre\bin\server\jvm.dll
+0x00007fff31c30000 - 0x00007fff31ce2000 	C:\WINDOWS\System32\ADVAPI32.dll
+0x00007fff32160000 - 0x00007fff32208000 	C:\WINDOWS\System32\sechost.dll
+0x00007fff30b00000 - 0x00007fff30b28000 	C:\WINDOWS\System32\bcrypt.dll
+0x00007fff32810000 - 0x00007fff32925000 	C:\WINDOWS\System32\RPCRT4.dll
+0x00007fff1fd70000 - 0x00007fff1fd79000 	C:\WINDOWS\SYSTEM32\WSOCK32.dll
+0x00007fff2fb50000 - 0x00007fff2fb9d000 	C:\WINDOWS\SYSTEM32\POWRPROF.dll
+0x00007fff27e60000 - 0x00007fff27e94000 	C:\WINDOWS\SYSTEM32\WINMM.dll
+0x00007fff1ed60000 - 0x00007fff1ed6a000 	C:\WINDOWS\SYSTEM32\VERSION.dll
+0x00007fff31fe0000 - 0x00007fff32051000 	C:\WINDOWS\System32\WS2_32.dll
+0x00007fff2faf0000 - 0x00007fff2fb03000 	C:\WINDOWS\SYSTEM32\UMPDC.dll
+0x00007fff2f260000 - 0x00007fff2f278000 	C:\WINDOWS\SYSTEM32\kernel.appcore.dll
+0x00007fff1e9b0000 - 0x00007fff1e9ba000 	C:\Users\ccruz\OneDrive\Escritorio\eclipse\plugins\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_17.0.8.v20230831-1047\jre\bin\jimage.dll
+0x00007fff2dab0000 - 0x00007fff2dce3000 	C:\WINDOWS\SYSTEM32\DBGHELP.DLL
+0x00007fff30dd0000 - 0x00007fff31158000 	C:\WINDOWS\System32\combase.dll
+0x00007fff32970000 - 0x00007fff32a47000 	C:\WINDOWS\System32\OLEAUT32.dll
+0x00007fff03290000 - 0x00007fff032c2000 	C:\WINDOWS\SYSTEM32\dbgcore.DLL
+0x00007fff30bf0000 - 0x00007fff30c6a000 	C:\WINDOWS\System32\bcryptPrimitives.dll
+0x00007fff18120000 - 0x00007fff18145000 	C:\Users\ccruz\OneDrive\Escritorio\eclipse\plugins\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_17.0.8.v20230831-1047\jre\bin\java.dll
+
+dbghelp: loaded successfully - version: 4.0.5 - missing functions: none
+symbol engine: initialized successfully - sym options: 0x614 - pdb path: .;C:\Users\ccruz\OneDrive\Escritorio\eclipse\plugins\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_17.0.8.v20230831-1047\jre\bin;C:\WINDOWS\SYSTEM32;C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.22621.3235_none_270f74e173860f98;C:\Users\ccruz\OneDrive\Escritorio\eclipse\plugins\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_17.0.8.v20230831-1047\jre\bin\server
+
+VM Arguments:
+jvm_args: -Dfile.encoding=UTF-8 -Dstdout.encoding=UTF-8 -Dstderr.encoding=UTF-8 -XX:+ShowCodeDetailsInExceptionMessages 
+java_command: estaciones.EstacionesApp
+java_class_path (initial): C:\Users\ccruz\OneDrive\Escritorio\UMU\5ºAño\AADD\citybike\ARSO_entregable2\estaciones-2-CruzadoEstaban\estaciones-2-CruzadoEstaban\target\classes;C:\Users\ccruz\.m2\repository\org\springframework\boot\spring-boot-starter-web\2.6.1\spring-boot-starter-web-2.6.1.jar;C:\Users\ccruz\.m2\repository\org\springframework\boot\spring-boot-starter\2.6.1\spring-boot-starter-2.6.1.jar;C:\Users\ccruz\.m2\repository\org\springframework\boot\spring-boot\2.6.1\spring-boot-2.6.1.jar;C:\Users\ccruz\.m2\repository\org\springframework\boot\spring-boot-autoconfigure\2.6.1\spring-boot-autoconfigure-2.6.1.jar;C:\Users\ccruz\.m2\repository\org\springframework\boot\spring-boot-starter-logging\2.6.1\spring-boot-starter-logging-2.6.1.jar;C:\Users\ccruz\.m2\repository\ch\qos\logback\logback-classic\1.2.7\logback-classic-1.2.7.jar;C:\Users\ccruz\.m2\repository\ch\qos\logback\logback-core\1.2.7\logback-core-1.2.7.jar;C:\Users\ccruz\.m2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.14.1\log4j-to-slf4j-2.14.1.jar;C:\Users\ccruz\.m2\repository\org\apache\logging\log4j\log4j-api\2.14.1\log4j-api-2.14.1.jar;C:\Users\ccruz\.m2\repository\org\slf4j\jul-to-slf4j\1.7.32\jul-to-slf4j-1.7.32.jar;C:\Users\ccruz\.m2\repository\jakarta\annotation\jakarta.annotation-api\1.3.5\jakarta.annotation-api-1.3.5.jar;C:\Users\ccruz\.m2\repository\org\yaml\snakeyaml\1.29\snakeyaml-1.29.jar;C:\Users\ccruz\.m2\repository\org\springframework\boot\spring-boot-starter-json\2.6.1\spring-boot-starter-json-2.6.1.jar;C:\Users\ccruz\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.13.0\jackson-datatype-jdk8-2.13.0.jar;C:\Users\ccruz\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.13.0\jackson-datatype-jsr310-2.13.0.jar;C:\Users\ccruz\.m2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.13.0\jackson-module-parameter-names-2.13.0.jar;C:\Users\ccruz\.m2\repository\org\springframework\boot\spring-boot-starter-tomcat\2.6.1\spring-
+Launcher Type: SUN_STANDARD
+
+[Global flags]
+     intx CICompilerCount                          = 4                                         {product} {ergonomic}
+     uint ConcGCThreads                            = 3                                         {product} {ergonomic}
+     uint G1ConcRefinementThreads                  = 10                                        {product} {ergonomic}
+   size_t G1HeapRegionSize                         = 2097152                                   {product} {ergonomic}
+    uintx GCDrainStackTargetSize                   = 64                                        {product} {ergonomic}
+   size_t InitialHeapSize                          = 266338304                                 {product} {ergonomic}
+   size_t MarkStackSize                            = 4194304                                   {product} {ergonomic}
+   size_t MaxHeapSize                              = 4240441344                                {product} {ergonomic}
+   size_t MinHeapDeltaBytes                        = 2097152                                   {product} {ergonomic}
+   size_t MinHeapSize                              = 8388608                                   {product} {ergonomic}
+    uintx NonNMethodCodeHeapSize                   = 5839372                                {pd product} {ergonomic}
+    uintx NonProfiledCodeHeapSize                  = 122909434                              {pd product} {ergonomic}
+    uintx ProfiledCodeHeapSize                     = 122909434                              {pd product} {ergonomic}
+    uintx ReservedCodeCacheSize                    = 251658240                              {pd product} {ergonomic}
+     bool SegmentedCodeCache                       = true                                      {product} {ergonomic}
+     bool ShowCodeDetailsInExceptionMessages       = true                                   {manageable} {command line}
+   size_t SoftMaxHeapSize                          = 4240441344                             {manageable} {ergonomic}
+     bool UseCompressedClassPointers               = true                           {product lp64_product} {ergonomic}
+     bool UseCompressedOops                        = true                           {product lp64_product} {ergonomic}
+     bool UseG1GC                                  = true                                      {product} {ergonomic}
+     bool UseLargePagesIndividualAllocation        = false                                  {pd product} {ergonomic}
+
+Logging:
+Log output configuration:
+ #0: stdout all=warning uptime,level,tags
+ #1: stderr all=off uptime,level,tags
+
+Environment Variables:
+PATH=C:/Users/ccruz/OneDrive/Escritorio/eclipse//plugins/org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_17.0.8.v20230831-1047/jre/bin/server;C:/Users/ccruz/OneDrive/Escritorio/eclipse//plugins/org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_17.0.8.v20230831-1047/jre/bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Python312\Scripts\;C:\Python312\;C:\Qt\Qt5.13.0\5.13.0\mingw73_32\bin;C:\OpenCV\OpenCV4.6.0G\bin;C:\Program Files\Eclipse Adoptium\jdk-17.0.5.8-hotspot\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\dotnet\;C:\Program Files (x86)\Bitvise SSH Client;C:\ProgramData\chocolatey\bin;C:\Program Files\nodejs\;C:\Program Files\dotnet\;C:\Program Files\Git\cmd;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\OpenCV\OpenCV4.6.0G\bin;C:\Qt\Qt5.13.0\5.13.0\mingw73_32\bin;C:\Users\ccruz\AppData\Local\Microsoft\WindowsApps;C:\Users\ccruz\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\ccruz\AppData\Local\GitHubDesktop\bin;C:\dev\flutter\bin;C:\Users\ccruz\AppData\Roaming\npm;;C:\Users\ccruz\OneDrive\Escritorio\eclipse;
+USERNAME=ccruz
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD
+TMP=C:\Users\ccruz\AppData\Local\Temp
+TEMP=C:\Users\ccruz\AppData\Local\Temp
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS:
+ Windows 11 , 64 bit Build 22621 (10.0.22621.3235)
+OS uptime: 12 days 18:40 hours
+Hyper-V role detected
+
+CPU: total 12 (initial active 12) (12 cores per cpu, 2 threads per core) family 25 model 80 stepping 0 microcode 0x0, cx8, cmov, fxsr, ht, mmx, 3dnowpref, sse, sse2, sse3, ssse3, sse4a, sse4.1, sse4.2, popcnt, lzcnt, tsc, tscinvbit, avx, avx2, aes, erms, clmul, bmi1, bmi2, adx, sha, fma, vzeroupper, clflush, clflushopt, hv
+Processor Information for all 12 processors :
+  Max Mhz: 3600, Current Mhz: 3600, Mhz Limit: 3600
+
+Memory: 4k page, system-wide physical 16169M (1735M free)
+TotalPageFile size 65321M (AvailPageFile size 195M)
+current process WorkingSet (physical memory assigned to process): 12M, peak: 12M
+current process commit charge ("private bytes"): 64M, peak: 318M
+
+vm_info: OpenJDK 64-Bit Server VM (17.0.8.1+1) for windows-amd64 JRE (17.0.8.1+1), built on Aug 23 2023 15:29:17 by "admin" with MS VC++ 16.7 (VS2019)
+
+END.

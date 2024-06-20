@@ -1,0 +1,122 @@
+
+services:
+
+  # Servicio MySQL
+  mysql:
+      image: mysql:8
+      restart: always
+      container_name: mysql1
+      environment:
+        MYSQL_DATABASE: alquileres
+        MYSQL_ROOT_PASSWORD: practicas
+      ports:
+        - "3306:3306"
+      volumes:
+        - mysql_data:/var/lib/mysql
+      networks:
+        - my_network
+      healthcheck:
+        test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+        interval: 10s
+        timeout: 5s
+        retries: 3
+
+  mongo: 
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mrcharli03
+      MONGO_INITDB_ROOT_PASSWORD: practicas
+    networks:
+      - my_network
+
+  mongo-express: 
+    image: mongo-express
+    restart: always
+    ports:
+      - "8070:8081"
+    environment:
+      ME_CONFIG_BASICAUTH: false
+      ME_CONFIG_MONGODB_ADMINUSERNAME: mrcharli03
+      ME_CONFIG_MONGODB_ADMINPASSWORD: practicas
+      ME_CONFIG_MONGODB_URL: mongodb://mrcharli03:practicas@mongo:27017/
+    depends_on:
+      - mongo
+    networks:
+      - my_network
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - my_network
+
+  usuarios-service:
+    build: ../Usuarios
+    image: mrcharli03/usuarios:1.0
+    ports:
+      - "5076:5076"
+    environment:
+      MONGODB_URI: mongodb://mrcharli03:practicas@mongo:27017/usuarios?authSource=admin
+      MONGODB_DATABASE:  usuarios
+    networks:
+      - my_network
+
+  alquileres-service:
+    environment:
+      DB_URL: "jdbc:mysql://mysql:3306/alquileres?serverTimezone=CET"
+      DB_USER: "root"
+      DB_PASSWORD: "practicas"
+      RABBITMQ_URI: amqp://guest:guest@rabbitmq:5672
+    depends_on:
+      mysql:
+        condition: service_healthy
+    build: ../arso
+    image: mrcharli03/alquileres:1.0
+    restart: always
+    ports:
+      - "8081:8080"
+    networks:
+      - my_network
+
+  estaciones-service:
+    build: ../estaciones-2-CruzadoEstaban
+    image: mrcharli03/estacionest:1.0
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mrcharli03:practicas@mongo:27017/estaciones?authSource=admin
+      SPRING_RABBITMQ_ADDRESSES: amqp://guest:guest@rabbitmq:5672
+    depends_on:
+      - mongo
+    networks:
+      - my_network
+  
+  pasarela-service:
+    build: ../pasarela
+    image: mrcharli03/pasarela:1.0
+    ports:
+      - "8090:8090"
+    environment:
+      RUTA_USUARIOS_URL: http://usuarios-service:5076/api/usuarios/
+      RUTA_ALQUILERES_URL: http://alquileres-service:8080/api/alquileres
+      RUTA_ESTACIONES_URL: http://estaciones-service:8080/estaciones
+    networks:
+      - my_network
+
+volumes:
+  mysql_data:
+  mongo_data:
+  rabbitmq_data:
+
+networks:
+  my_network:
+    driver: bridge

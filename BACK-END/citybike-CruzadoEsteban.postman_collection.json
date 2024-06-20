@@ -1,0 +1,634 @@
+{
+	"info": {
+		"_postman_id": "4be9ff35-4082-44cf-8adf-3eb30aedb77c",
+		"name": "citybike-CruzadoEsteban",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33246424"
+	},
+	"item": [
+		{
+			"name": "Alquileres",
+			"item": [
+				{
+					"name": "Historial del usuario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}alquileres/usuarios/Eddy",
+							"host": [
+								"{{url}}alquileres"
+							],
+							"path": [
+								"usuarios",
+								"Eddy"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Hacer una reserva",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "idUsuario",
+									"value": "Eddy",
+									"type": "text"
+								},
+								{
+									"key": "idBici",
+									"value": "663b44b74d677a38f19c9cc5",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}alquileres/reservas",
+							"host": [
+								"{{url}}alquileres"
+							],
+							"path": [
+								"reservas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Alquilar una bici",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}alquileres/usuarios/Eddy/bicicletas/663b44a64d677a38f19c9cc3",
+							"host": [
+								"{{url}}alquileres"
+							],
+							"path": [
+								"usuarios",
+								"Eddy",
+								"bicicletas",
+								"663b44a64d677a38f19c9cc3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Confirmar una reserva",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}alquileres/usuarios/Eddy",
+							"host": [
+								"{{url}}alquileres"
+							],
+							"path": [
+								"usuarios",
+								"Eddy"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dejar una bici",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{url}}alquileres/usuarios/Eddy/estaciones/663b46974d677a38f19c9cc6",
+							"host": [
+								"{{url}}alquileres"
+							],
+							"path": [
+								"usuarios",
+								"Eddy",
+								"estaciones",
+								"663b46974d677a38f19c9cc6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Liberar bloqueo de usuario",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{url}}alquileres/usuarios/Eddy",
+							"host": [
+								"{{url}}alquileres"
+							],
+							"path": [
+								"usuarios",
+								"Eddy"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Estaciones",
+			"item": [
+				{
+					"name": "Dar de alta una estacion",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Murcia Centro\",\r\n    \"numPuestos\": \"10\",\r\n    \"codPostal\": \"30001\",\r\n    \"lat\": \"37.98404304367661\",\r\n    \"lng\": \"-1.1285752035593704\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}estaciones/estacionesBicicletas",
+							"host": [
+								"{{url}}estaciones"
+							],
+							"path": [
+								"estacionesBicicletas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dar de alta una bici",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"modelo\": \"BMX Ultra\",\r\n    \"idEstacion\": \"6639e2f3a6406c3766d95695\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}estaciones/bicicletas",
+							"host": [
+								"{{url}}estaciones"
+							],
+							"path": [
+								"bicicletas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dar de baja una bici",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}estaciones/bicicletas/66388623208387171c47be4f?motivo=Se rompió la bici",
+							"host": [
+								"{{url}}estaciones"
+							],
+							"path": [
+								"bicicletas",
+								"66388623208387171c47be4f"
+							],
+							"query": [
+								{
+									"key": "motivo",
+									"value": "Se rompió la bici"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obterner bicis de una estacion",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}estaciones/663b44884d677a38f19c9cc2/bicicletas/listado?page=0&size=5&motivo=Se ha roto",
+							"host": [
+								"{{url}}estaciones"
+							],
+							"path": [
+								"663b44884d677a38f19c9cc2",
+								"bicicletas",
+								"listado"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								},
+								{
+									"key": "motivo",
+									"value": "Se ha roto"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener estaciones",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}estaciones/listado?page=0&size=5",
+							"host": [
+								"{{url}}estaciones"
+							],
+							"path": [
+								"listado"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener estacion sin bicis",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}estaciones/663b44884d677a38f19c9cc2/noBicicletas",
+							"host": [
+								"{{url}}estaciones"
+							],
+							"path": [
+								"663b44884d677a38f19c9cc2",
+								"noBicicletas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener bicis disponibles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}estaciones/663b44884d677a38f19c9cc2/bicicletas?page=0&size=5",
+							"host": [
+								"{{url}}estaciones"
+							],
+							"path": [
+								"663b44884d677a38f19c9cc2",
+								"bicicletas"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Estacionar bici",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}estaciones/663b46974d677a38f19c9cc6/bicicletas/663b44b74d677a38f19c9cc5",
+							"host": [
+								"{{url}}estaciones"
+							],
+							"path": [
+								"663b46974d677a38f19c9cc6",
+								"bicicletas",
+								"663b44b74d677a38f19c9cc5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "Obtener usuarios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}usuarios",
+							"host": [
+								"{{url}}usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Solicitar codigo activacion",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\"48844607W\"",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}usuarios/solicitudesCodigos",
+							"host": [
+								"{{url}}usuarios"
+							],
+							"path": [
+								"solicitudesCodigos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dar de alta un usuario",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"dni\": \"48844607W\",\r\n  \"nombreCompleto\": \"Eduardo Gallego Nicolás\",\r\n  \"username\": \"Edd\",\r\n  \"idOAuth\": \"56110484\",\r\n  \"direccionPostal\": \"30007\",\r\n  \"telefono\": \"609763989\",\r\n  \"password\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}usuarios/register/?codigoActivacion=663b444221250ebe76d86c99NC2024-05-08T09:22:10ZNC2024-05-09T09:22:10ZNC48844607W",
+							"host": [
+								"{{url}}usuarios"
+							],
+							"path": [
+								"register",
+								""
+							],
+							"query": [
+								{
+									"key": "codigoActivacion",
+									"value": "663b444221250ebe76d86c99NC2024-05-08T09:22:10ZNC2024-05-09T09:22:10ZNC48844607W"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dar de baja un usuario",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}usuarios/bajaUsuario?usuarioId=6638780d1d1d211f08ac4270",
+							"host": [
+								"{{url}}usuarios"
+							],
+							"path": [
+								"bajaUsuario"
+							],
+							"query": [
+								{
+									"key": "usuarioId",
+									"value": "6638780d1d1d211f08ac4270"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verificar credenciales",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Username\": \"MrCharli03\",\r\n    \"Password\": \"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}usuarios/credenciales",
+							"host": [
+								"{{url}}usuarios"
+							],
+							"path": [
+								"credenciales"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verificar OAuth2",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}usuarios/oauth2/?oauth2Id=56110484",
+							"host": [
+								"{{url}}usuarios"
+							],
+							"path": [
+								"oauth2",
+								""
+							],
+							"query": [
+								{
+									"key": "oauth2Id",
+									"value": "56110484"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pasarela",
+			"item": [
+				{
+					"name": "Login OAuth2",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}auth/oauth2?code=56110484",
+							"host": [
+								"{{url}}auth"
+							],
+							"path": [
+								"oauth2"
+							],
+							"query": [
+								{
+									"key": "code",
+									"value": "56110484"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login credenciales",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"Eddy\",\r\n    \"password\": \"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}auth/login",
+							"host": [
+								"{{url}}auth"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiJ9.eyJkbmkiOiI0OTMwODI4NFgiLCJub21icmVDb21wbGV0byI6IkNhcmxvcyBDcnV6YWRvIEVzdGViYW4iLCJyb2wiOiJHZXN0b3IiLCJleHAiOjE3MTUxNjM1MzB9.UnhYVi9eHr3fsi81ZW2dC5RkXsrheX1zj9RvjZSCb_o",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://localhost:8090/",
+			"type": "string"
+		}
+	]
+}

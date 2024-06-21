@@ -93,19 +93,19 @@ const Estaciones = () => {
     }, [buscarTermino, numPuestos, currentPage]);
 
     const parseSearchTerm = (term) => {
-        const regex = /(\d{5})|([^,\d]+)/g;
+        const regex = /(\d{1,5})|([^,\d]+)/g;
         const matches = term.match(regex);
         let nombre = '';
         let codPostal = '';
-
+    
         matches?.forEach(match => {
-            if (/^\d{5}$/.test(match)) { 
+            if (/^\d{1,5}$/.test(match)) { 
                 codPostal = match;
             } else if (match.trim().length > 0) {
                 nombre = match.trim();
             }
         });
-
+    
         return [nombre, codPostal];
     };
 

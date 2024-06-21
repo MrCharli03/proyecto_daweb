@@ -11,11 +11,12 @@ const GitHubCallback = () => {
 
         if (base64Credenciales) {
             const jsonResponse = atob(base64Credenciales);
-            const { token, rol } = JSON.parse(jsonResponse);
+            const { token, rol, username } = JSON.parse(jsonResponse);
 
             if (token) {
                 sessionStorage.setItem('jwtToken', token);
                 sessionStorage.setItem('userRole', rol);
+                sessionStorage.setItem('username', username);
                 navigate('/principal');
             }
         }

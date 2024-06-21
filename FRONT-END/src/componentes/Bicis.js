@@ -99,7 +99,7 @@ const Bicis = () => {
                                 <Card className="h-100" style={{
                                     backgroundColor: 
                                         bici.estado === 'DISPONIBLE' ? 'var(--olive)' :
-                                        bici.estado === 'RESERVADA' ? 'rgb(209, 82, 41)' :
+                                        bici.estado === 'RESERVADA' ? 'var(--atomic-tangerine)' :
                                         '#DC143C',
                                     color: 'white'
                                 }}>
@@ -111,7 +111,7 @@ const Bicis = () => {
                                             <strong>Motivo:</strong> {bici.motivo || '-'}<br />
                                             <strong>Estado:</strong> {bici.estado}<br />
                                             <strong>Estacion:</strong> {bici.estacionID !== null ? (
-                                                <a href={`https://www.google.es/maps?q=${getEstacionLat(bici.estacionID)},${getEstacionLng(bici.estacionID)}`} target="_blank" rel="noopener noreferrer" style={{ color: "lightblue", textDecoration: 'underline' }}>
+                                                <a href={`https://www.google.es/maps?q=${getEstacionLat(bici.estacionID)},${getEstacionLng(bici.estacionID)}`} target="_blank" rel="noopener noreferrer" style={{ color: "darkblue", textDecoration: 'underline' }}>
                                                     {getEstacionNombre(bici.estacionID)}
                                                 </a>
                                             ) : '-'}

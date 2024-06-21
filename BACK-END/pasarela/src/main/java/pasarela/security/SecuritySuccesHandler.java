@@ -54,6 +54,7 @@ public class SecuritySuccesHandler implements AuthenticationSuccessHandler {
             authResult.put("token", token);
             authResult.put("identificador del usuario", claims.get("dni"));
             authResult.put("nombre completo del usuario", claims.get("nombreCompleto"));
+            authResult.put("username", claims.get("username"));
             authResult.put("rol", claims.get("rol"));
 
             String jsonResponse = objectMapper.writeValueAsString(authResult);

@@ -39,7 +39,7 @@ const Registro = () => {
                     password: password
                 };
     
-                const registerResponse = await fetch(`http://localhost:5000/usuarios/register`, { // Cambiar a 5000
+                const registerResponse = await fetch(`http://localhost:5000/usuarios/register`, { // Se hace con express
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

@@ -7,7 +7,7 @@
 }
 
 .custom-button:hover {
-    background-color: var(--dark-olive);
+    background-color: var(--dark-olive) !important;
 }
 
 .custom-button:active {

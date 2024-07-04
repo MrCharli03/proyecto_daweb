@@ -318,7 +318,7 @@ const Estaciones = () => {
             }
         } catch (error) {
             setError('Error al obtener las estaciones');
-            setShowErrorDialog(true);
+            //setShowErrorDialog(true);
         }
     };
 

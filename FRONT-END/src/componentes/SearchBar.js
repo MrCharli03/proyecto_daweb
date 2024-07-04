@@ -29,7 +29,7 @@ const SearchBar = ({ buscarTermino, setBuscarTermino, numPuestos, setNumPuestos,
             <MdCleaningServices /> <span>Limpiar búsqueda</span>
         </Button>
         {userRole === 'Gestor' && (
-            <Button className='custom-button' onClick={handleAddEstacion}>
+            <Button className='custom-button clear-button' onClick={handleAddEstacion}>
                 <BsPlusCircleFill /> <span style={{ marginLeft: '5px' }}>Agregar Estación</span>
             </Button>
         )}

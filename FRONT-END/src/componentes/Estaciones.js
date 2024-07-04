@@ -306,7 +306,7 @@ const Estaciones = () => {
         const jwtToken = sessionStorage.getItem('jwtToken');
 
         try {
-            const data = await fetchEstaciones(jwtToken, '', '', '');
+            const data = await fetchEstaciones(jwtToken, '', '', '', currentPage, 6);
             if (data.hasOwnProperty('_embedded')) {
                 const estacionesList = data._embedded.estacionDTOList;
                 setEstaciones(estacionesList);
@@ -318,7 +318,7 @@ const Estaciones = () => {
             }
         } catch (error) {
             setError('Error al obtener las estaciones');
-            //setShowErrorDialog(true);
+            setShowErrorDialog(true);
         }
     };
 
